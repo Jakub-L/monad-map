@@ -6,16 +6,18 @@
 	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
 
 	// Types
-	import type { LngLat, MapMouseEvent } from 'maplibre-gl';
+	import type { MapMouseEvent } from 'maplibre-gl';
 
 	// State
 	import { center, zoom, markers } from '$lib/map-state.svelte';
 
 	// Handlers
-	const addMarker = (e: MapMouseEvent) => {
+	const addMarker = ({ lngLat }: MapMouseEvent) => {
 		markers.push({
 			id: nanoid(),
-			lngLat: e.lngLat
+			lngLat,
+			title: '',
+			description: ''
 		});
 	};
 
@@ -26,11 +28,11 @@
 
 <div class="flex h-svh flex-col">
 	<h1>MonadMap</h1>
-	<div class="grid h-full grid-cols-12">
+	<div class="grid h-full grid-cols-3">
 		<MapLibre
 			style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
 			standardControls
-			class="col-span-8 h-full"
+			class="col-span-2 h-full"
 			{zoom}
 			{center}
 		>
@@ -46,6 +48,14 @@
 				</Marker>
 			{/each}
 		</MapLibre>
-		<div>Hello</div>
+		<div>
+			{#each markers as marker, i (marker.id)}
+				<div class="flex items-center">
+					<span>{i + 1}</span>
+					<input bind:value={marker.description} />
+					<button>v</button>
+				</div>
+			{/each}
+		</div>
 	</div>
 </div>
