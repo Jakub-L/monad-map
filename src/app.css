@@ -1,3 +1,43 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('/fonts/montserrat.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('/fonts/montserrat-italic.ttf');
+	font-weight: normal;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('/fonts/montserrat-semibold.ttf');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('/fonts/montserrat-semibold-italic.ttf');
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Audiowide';
+	src: url('/fonts/audiowide.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	background: repeating-linear-gradient(0, #2a1966 0px, #2a1966 2px, #040307 2px, #040307 7px);
+	backdrop-filter: blur(2px);
+}
