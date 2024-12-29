@@ -4,6 +4,7 @@
 
 	// Components
 	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
+	import Input from '$lib/components/input.svelte';
 
 	// Types
 	import type { MapMouseEvent } from 'maplibre-gl';
@@ -49,10 +50,11 @@
 			{/each}
 		</MapLibre>
 		<div>
+			<h2>Points of Interest</h2>
 			{#each markers as marker, i (marker.id)}
 				<div class="flex items-center">
 					<span>{i + 1}</span>
-					<input bind:value={marker.description} />
+					<Input bind:value={marker.description} label=":)" />
 					<button>v</button>
 				</div>
 			{/each}
