@@ -31,13 +31,8 @@
 }
 
 @font-face {
-	font-family: 'Audiowide';
-	src: url('/fonts/audiowide.ttf');
+	font-family: 'NovaSquare';
+	src: url('/fonts/novasquare.ttf');
 	font-weight: normal;
 	font-style: normal;
-}
-
-body {
-	background: repeating-linear-gradient(0, #2a1966 0px, #2a1966 2px, #040307 2px, #040307 7px);
-	backdrop-filter: blur(2px);
 }

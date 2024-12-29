@@ -4,6 +4,7 @@
 
 	// Components
 	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
+	import IconDown from '~icons/ion/caret-down-sharp';
 	import Input from '$lib/components/input.svelte';
 
 	// Types
@@ -28,7 +29,7 @@
 </script>
 
 <div class="flex h-svh flex-col">
-	<h1>MonadMap</h1>
+	<h1 class="font-nova uppercase">Monad//Map</h1>
 	<div class="grid h-full grid-cols-3">
 		<MapLibre
 			style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
@@ -50,12 +51,16 @@
 			{/each}
 		</MapLibre>
 		<div>
-			<h2>Points of Interest</h2>
+			<h2 class="font-nova">Points of Interest</h2>
 			{#each markers as marker, i (marker.id)}
 				<div class="flex items-center">
 					<span>{i + 1}</span>
-					<Input bind:value={marker.description} label=":)" />
-					<button>v</button>
+					<Input
+						bind:value={marker.description}
+						label="Name"
+						placeholder="Point of interest name"
+					/>
+					<button title="Expand description"><IconDown class="h-6 w-6" /></button>
 				</div>
 			{/each}
 		</div>
