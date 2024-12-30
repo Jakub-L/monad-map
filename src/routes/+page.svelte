@@ -28,7 +28,7 @@
 	};
 </script>
 
-<div class="flex max-h-full flex-col">
+<div class="flex max-h-full h-full flex-col">
 	<h1 class="m-2 font-nova text-3xl uppercase">Monad//Map</h1>
 	<div class="grid max-h-full grow grid-cols-3 gap-2">
 		<MapLibre
