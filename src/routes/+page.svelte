@@ -34,7 +34,7 @@
 		<MapLibre
 			style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
 			standardControls
-			class="col-span-2 m-2"
+			class="col-span-2 ml-2 mb-2"
 			{zoom}
 			{center}
 		>
@@ -52,7 +52,7 @@
 		</MapLibre>
 		<div class="flex max-h-full flex-col">
 			<h2 class="font-nova text-xl">Points of Interest</h2>
-			<div id="poi-list" class="flex flex-col gap-4 overflow-y-auto p-2 pl-0">
+			<div id="poi-list" class="flex flex-col gap-4 overflow-y-auto my-2 pr-2">
 				{#each markers as marker, i (marker.id)}
 					<PointOfInterest {marker} index={i} />
 				{/each}
@@ -63,6 +63,6 @@
 
 <style>
 	#poi-list {
-		max-height: calc(100dvh - 5rem);
+		max-height: calc(100dvh - 7rem);
 	}
 </style>
