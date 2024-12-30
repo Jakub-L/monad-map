@@ -12,11 +12,11 @@
 	let isExpanded: boolean = $state(false);
 </script>
 
-<div id="container" class="flex my-2 items-center rounded-br-3xl border border-red-500">
-	<span class="font-nova text-xl">{index + 1}</span>
-	<div>
+<div id="container" class="flex w-full items-center gap-2 border border-red-500">
+	<div class="min-w-6 font-nova text-xl">{index + 1}</div>
+	<div class="flex flex-col pr-8 overflow-y-hidden">
 		<h3 class="font-nova">{marker.title}</h3>
-		<p class="text-sm">{marker.description}</p>
+		<p class="text-sm truncate">{marker.description}</p>
 	</div>
 </div>
 
