@@ -28,13 +28,13 @@
 	};
 </script>
 
-<div class="flex h-svh flex-col">
-	<h1 class="font-nova uppercase">Monad//Map</h1>
-	<div class="grid h-full grid-cols-3">
+<div class="flex max-h-full flex-col">
+	<h1 class="m-2 font-nova text-3xl uppercase">Monad//Map</h1>
+	<div class="grid max-h-full grow grid-cols-3 gap-2">
 		<MapLibre
 			style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
 			standardControls
-			class="col-span-2 h-full"
+			class="col-span-2 m-2"
 			{zoom}
 			{center}
 		>
@@ -50,11 +50,19 @@
 				</Marker>
 			{/each}
 		</MapLibre>
-		<div>
-			<h2 class="font-nova">Points of Interest</h2>
-			{#each markers as marker, i (marker.id)}
-				<PointOfInterest {marker} index={i} />
-			{/each}
+		<div class="flex max-h-full flex-col">
+			<h2 class="font-nova text-xl">Points of Interest</h2>
+			<div id="poi-list" class="flex flex-col gap-4 overflow-y-auto p-2 pl-0">
+				{#each markers as marker, i (marker.id)}
+					<PointOfInterest {marker} index={i} />
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	#poi-list {
+		max-height: calc(100dvh - 5rem);
+	}
+</style>
