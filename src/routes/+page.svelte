@@ -4,22 +4,22 @@
 
 	// Components
 	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
-	import IconDown from '~icons/ion/caret-down-sharp';
-	import Input from '$lib/components/input.svelte';
 
 	// Types
 	import type { MapMouseEvent } from 'maplibre-gl';
 
 	// State
 	import { center, zoom, markers } from '$lib/map-state.svelte';
+	import PointOfInterest from '$lib/components/point-of-interest.svelte';
 
 	// Handlers
 	const addMarker = ({ lngLat }: MapMouseEvent) => {
 		markers.push({
 			id: nanoid(),
 			lngLat,
-			title: '',
-			description: ''
+			title: `Lorem ipsum dolor sit amet, consectetur cras amet.`,
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo vestibulum, pulvinar urna non, ornare nisi. Pellentesque dignissim tincidunt leo a pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer lorem nulla, mollis laoreet bibendum id, gravida in risus. Mauris facilisis mi volutpat ipsum dapibus, et molestie sapien finibus augue.'
 		});
 	};
 
@@ -53,15 +53,7 @@
 		<div>
 			<h2 class="font-nova">Points of Interest</h2>
 			{#each markers as marker, i (marker.id)}
-				<div class="flex items-center">
-					<span>{i + 1}</span>
-					<Input
-						bind:value={marker.description}
-						label="Name"
-						placeholder="Point of interest name"
-					/>
-					<button title="Expand description"><IconDown class="h-6 w-6" /></button>
-				</div>
+				<PointOfInterest {marker} index={i} />
 			{/each}
 		</div>
 	</div>
