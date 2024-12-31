@@ -4,16 +4,18 @@
 
 	// Components
 	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
+	import PointOfInterest from '$lib/components/point-of-interest.svelte';
 
 	// Types
 	import type { MapMouseEvent } from 'maplibre-gl';
 
 	// State
 	import { center, zoom, markers } from '$lib/map-state.svelte';
-	import PointOfInterest from '$lib/components/point-of-interest.svelte';
+	import { MAX_MARKERS } from '$lib/constants';
 
 	// Handlers
 	const addMarker = ({ lngLat }: MapMouseEvent) => {
+		if (markers.length >= MAX_MARKERS) return;
 		markers.push({
 			id: nanoid(),
 			lngLat,
@@ -28,13 +30,13 @@
 	};
 </script>
 
-<div class="flex max-h-full h-full flex-col">
+<div class="flex h-full max-h-full flex-col">
 	<h1 class="m-2 font-nova text-3xl uppercase">Monad//Map</h1>
 	<div class="grid max-h-full grow grid-cols-3 gap-2">
 		<MapLibre
 			style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
 			standardControls
-			class="col-span-2 ml-2 mb-2"
+			class="col-span-2 mb-2 ml-2"
 			{zoom}
 			{center}
 		>
@@ -50,9 +52,12 @@
 				</Marker>
 			{/each}
 		</MapLibre>
-		<div class="flex max-h-full flex-col">
-			<h2 class="font-nova text-xl">Points of Interest</h2>
-			<div id="poi-list" class="flex flex-col gap-4 overflow-y-auto my-2 pr-2">
+		<div class="flex max-h-full flex-col pr-2">
+			<div class="flex items-center justify-between font-nova">
+				<h2 class="text-xl">Points of Interest</h2>
+				<span class="text-lg">{markers.length}/{MAX_MARKERS}</span>
+			</div>
+			<div id="poi-list" class="my-2 flex flex-col gap-4 overflow-y-auto">
 				{#each markers as marker, i (marker.id)}
 					<PointOfInterest {marker} index={i} />
 				{/each}
