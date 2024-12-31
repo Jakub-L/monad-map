@@ -14,24 +14,30 @@
 	const toggle = () => (isExpanded = !isExpanded);
 </script>
 
-<div id="container" class="flex w-full gap-2 border border-red-500 px-2 py-1">
-	<span class="min-w-6 text-center font-nova text-xl">{index + 1}</span>
-	<div class="flex flex-col overflow-hidden">
-		<h3 class="truncate font-nova">{marker.title}</h3>
-		<div
-			class={[
-				'grid overflow-hidden transition-all duration-300',
-				isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-			]}
+<div id="container" class="flex w-full flex-col border border-red-500 px-2 py-1">
+	<div class="flex items-center gap-2">
+		<span class="min-w-6 text-center font-nova text-xl">{index + 1}</span>
+		<h3 class="grow truncate font-nova">{marker.title}</h3>
+		<button
+			onclick={toggle}
+			class="group group flex min-h-8 min-w-8 items-center justify-center self-start rounded-full p-0.5 hover:bg-red-100/15 hover:text-red-500 active:bg-red-100/15 active:text-red-800"
 		>
-			<p class="overflow-hidden text-sm opacity-85">
-				{marker.description}
-			</p>
-		</div>
+			<IconDown
+				class={[
+					'h-5 w-5 transition-all duration-200 group-active:scale-90',
+					isExpanded && '-scale-100'
+				]}
+			/>
+		</button>
 	</div>
-	<button onclick={toggle} class="self-start">
-		<IconDown class={['h-6 w-6 transition-all duration-200', isExpanded && '-scale-100']} />
-	</button>
+	<p
+		class={[
+			'ml-8 mr-10 overflow-hidden border-t border-red-500/50 pt-1 text-sm opacity-85',
+			!isExpanded && 'truncate'
+		]}
+	>
+		{marker.description}
+	</p>
 </div>
 
 <style>
