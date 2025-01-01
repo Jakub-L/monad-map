@@ -5,6 +5,7 @@
 	// Components
 	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
 	import PointOfInterest from '$lib/components/point-of-interest.svelte';
+	import Toolbar from '$lib/components/toolbar.svelte';
 
 	// Types
 	import type { MapMouseEvent } from 'maplibre-gl';
@@ -37,7 +38,7 @@
 </script>
 
 <div class="flex h-full max-h-full flex-col">
-	<h1 class="m-2 font-nova text-3xl uppercase">Monad//Map</h1>
+	<Toolbar />
 	<div class="grid max-h-full grow grid-cols-3 gap-2">
 		<MapLibre
 			style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
