@@ -8,21 +8,27 @@
 
 	// Types
 	import type { MapMouseEvent } from 'maplibre-gl';
+	import type { PoI } from '$lib/types';
+
+	// Utils
+	import { localStore } from '$lib/state.svelte';
+	import { MAX_MARKERS } from '$lib/constants';
 
 	// State
-	import { center, zoom, markers } from '$lib/map-state.svelte';
-	import { MAX_MARKERS } from '$lib/constants';
+	const markers = localStore<PoI[]>('monad/markers', []);
+	const zoom = localStore<number>('monad/zoom', 14);
+	const center = localStore<[number, number]>('monad/center', [-122.34062, 47.60556]);
 
 	// Handlers
 	const addMarker = ({ lngLat }: MapMouseEvent) => {
-		if (markers.length >= MAX_MARKERS) return;
-		markers.push({
+		if (markers.value.length >= MAX_MARKERS) return;
+		markers.value.push({
 			id: nanoid(),
 			lngLat,
 			title: `Lorem ipsum dolor sit amet, consectetur cras amet.`,
 			description:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo vestibulum, pulvinar urna non, ornare nisi. Pellentesque dignissim tincidunt leo a pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer lorem nulla, mollis laoreet bibendum id, gravida in risus. Mauris facilisis mi volutpat ipsum dapibus, et molestie sapien finibus augue.'
-		});
+		} as PoI);
 	};
 
 	const selectMarker = () => {
@@ -37,11 +43,11 @@
 			style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
 			standardControls
 			class="col-span-2 mb-2 ml-2"
-			{zoom}
-			{center}
+			bind:zoom={zoom.value}
+			bind:center={center.value}
 		>
 			<MapEvents onclick={addMarker} />
-			{#each markers as marker, i (marker.id)}
+			{#each markers.value as marker, i (marker.id)}
 				<Marker
 					draggable
 					bind:lngLat={marker.lngLat}
@@ -55,10 +61,10 @@
 		<div class="flex max-h-full flex-col pr-2">
 			<div class="flex items-center justify-between font-nova">
 				<h2 class="text-xl">Points of Interest</h2>
-				<span class="text-lg">{markers.length}/{MAX_MARKERS}</span>
+				<span class="text-lg">{markers.value.length}/{MAX_MARKERS}</span>
 			</div>
 			<div id="poi-list" class="my-2 flex flex-col gap-4 overflow-y-auto">
-				{#each markers as marker, i (marker.id)}
+				{#each markers.value as marker, i (marker.id)}
 					<PointOfInterest {marker} index={i} />
 				{/each}
 			</div>

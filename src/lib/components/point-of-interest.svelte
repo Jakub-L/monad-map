@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Marker } from '$lib/types';
+	import type { PoI } from '$lib/types';
 	import Input from './input.svelte';
 	import IconDown from '~icons/ion/caret-down-sharp';
 
 	interface Props {
-		marker: Marker;
+		marker: PoI;
 		index: number;
 	}
 
