@@ -12,13 +12,10 @@
 	import type { PoI } from '$lib/types';
 
 	// Utils
-	import { localStore } from '$lib/state.svelte';
 	import { MAX_MARKERS } from '$lib/constants';
 
 	// State
-	const markers = localStore<PoI[]>('monad/markers', []);
-	const zoom = localStore<number>('monad/zoom', 14);
-	const center = localStore<[number, number]>('monad/center', [-122.34062, 47.60556]);
+	import { zoom, center, markers } from '$lib/state.svelte';
 
 	// Handlers
 	const addMarker = ({ lngLat }: MapMouseEvent) => {
