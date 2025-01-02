@@ -10,9 +10,7 @@
 	}
 
 	let { marker, index }: Props = $props();
-	let isExpanded: boolean = $state(false);
-
-	export const toggle = () => (isExpanded = !isExpanded);
+	let isExpanded: boolean = $state(true);
 </script>
 
 <Collapsible.Root
@@ -21,7 +19,6 @@
 	bind:open={isExpanded}
 >
 	<Collapsible.Trigger
-		onclick={toggle}
 		class="group group flex min-h-8 min-w-8 items-center justify-center self-start rounded-full p-0.5 hover:bg-red-100/15 hover:text-red-500 active:bg-red-100/15 active:text-red-800"
 	>
 		<IconDown

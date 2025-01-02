@@ -31,10 +31,6 @@
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo vestibulum, pulvinar urna non, ornare nisi. Pellentesque dignissim tincidunt leo a pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer lorem nulla, mollis laoreet bibendum id, gravida in risus. Mauris facilisis mi volutpat ipsum dapibus, et molestie sapien finibus augue.'
 		} as PoI);
 	};
-
-	const selectMarker = (id: string) => {
-		if (poiCards[id]) poiCards[id].toggle();
-	};
 </script>
 
 <div class="flex h-full max-h-full flex-col">
@@ -47,15 +43,13 @@
 				class="col-span-2 mb-2 ml-2"
 				bind:zoom={selectedMap.zoom}
 				bind:center={selectedMap.center}
-				zoomOnDoubleClick={false}
 			>
-				<MapEvents ondblclick={addMarker} />
+				<MapEvents onclick={addMarker} />
 				{#each selectedMap.markers as marker, i (marker.id)}
 					<Marker
 						draggable
 						bind:lngLat={marker.lngLat}
-						class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black hover:bg-green-300 shadow-2xl focus:outline-2 focus:outline-black"
-						onclick={() => selectMarker(marker.id)}
+						class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl hover:bg-green-300 focus:outline-2 focus:outline-black"
 					>
 						<span>{i + 1}</span>
 					</Marker>
