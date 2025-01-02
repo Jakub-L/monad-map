@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 
-import type { PoI } from '$lib/types';
+import type { MonadMap, PoI } from '$lib/types';
 
 class LocalStore<T> {
 	public value: T = $state<T>() as T;
@@ -28,6 +28,13 @@ function localStore<T>(key: string, value: T) {
 	return new LocalStore(key, value);
 }
 
-export const markers = localStore<PoI[]>('monad/markers', []);
-export const zoom = localStore<number>('monad/zoom', 14);
-export const center = localStore<[number, number]>('monad/center', [-122.34062, 47.60556]);
+export const selectedMapId = localStore<string>('monad/selectedMapId', '1');
+export const maps = localStore<Record<string, MonadMap>>('monad/maps', {
+	'1': {
+		id: '1',
+		name: 'Seattle',
+		markers: [],
+		zoom: 14,
+		center: [-122.34062, 47.60556]
+	}
+});

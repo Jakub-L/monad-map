@@ -1,8 +1,11 @@
 <script lang="ts">
-	import { markers } from '$lib/state.svelte';
+	import { selectedMapId, maps } from '$lib/state.svelte';
+
+	const selectedId = selectedMapId.value;
+	const selectedMap = maps.value[selectedId];
 
 	const clearMarkers = () => {
-		markers.value = [];
+		selectedMap.markers = [];
 	};
 </script>
 
