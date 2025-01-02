@@ -3,7 +3,7 @@
 	import { Collapsible } from 'bits-ui';
 	import IconDown from '~icons/ion/caret-down-sharp';
 	import { slide } from 'svelte/transition';
-	
+
 	interface Props {
 		marker: PoI;
 		index: number;
@@ -12,10 +12,14 @@
 	let { marker, index }: Props = $props();
 	let isExpanded: boolean = $state(false);
 
-	const toggle = () => (isExpanded = !isExpanded);
+	export const toggle = () => (isExpanded = !isExpanded);
 </script>
 
-<Collapsible.Root id="container" class="flex w-full items-center border border-red-500 p-2">
+<Collapsible.Root
+	id="container"
+	class="flex w-full items-center overflow-x-clip border border-red-500 p-2"
+	bind:open={isExpanded}
+>
 	<Collapsible.Trigger
 		onclick={toggle}
 		class="group group flex min-h-8 min-w-8 items-center justify-center self-start rounded-full p-0.5 hover:bg-red-100/15 hover:text-red-500 active:bg-red-100/15 active:text-red-800"

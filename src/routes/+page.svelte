@@ -9,15 +9,16 @@
 
 	// Types
 	import type { MapMouseEvent } from 'maplibre-gl';
-	import type { PoI } from '$lib/types';
+	import type { MonadMap, PoI } from '$lib/types';
 
 	// Utils
 	import { MAX_MARKERS } from '$lib/constants';
 
 	// State
 	import { selectedMapId, maps } from '$lib/state.svelte';
-	const selectedId = selectedMapId.value;
-	const selectedMap = maps.value[selectedId];
+	const selectedId: string = selectedMapId.value;
+	const selectedMap: MonadMap = maps.value[selectedId];
+	const poiCards: Record<string, any> = {};
 
 	// Handlers
 	const addMarker = ({ lngLat }: MapMouseEvent) => {
@@ -31,8 +32,8 @@
 		} as PoI);
 	};
 
-	const selectMarker = () => {
-		console.log('click');
+	const selectMarker = (id: string) => {
+		if (poiCards[id]) poiCards[id].toggle();
 	};
 </script>
 
@@ -46,14 +47,15 @@
 				class="col-span-2 mb-2 ml-2"
 				bind:zoom={selectedMap.zoom}
 				bind:center={selectedMap.center}
+				zoomOnDoubleClick={false}
 			>
-				<MapEvents onclick={addMarker} />
+				<MapEvents ondblclick={addMarker} />
 				{#each selectedMap.markers as marker, i (marker.id)}
 					<Marker
 						draggable
 						bind:lngLat={marker.lngLat}
-						class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl focus:outline-2 focus:outline-black"
-						onclick={selectMarker}
+						class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black hover:bg-green-300 shadow-2xl focus:outline-2 focus:outline-black"
+						onclick={() => selectMarker(marker.id)}
 					>
 						<span>{i + 1}</span>
 					</Marker>
@@ -66,7 +68,7 @@
 				</div>
 				<div id="poi-list" class="my-2 flex flex-col gap-4 overflow-y-auto">
 					{#each selectedMap.markers as marker, i (marker.id)}
-						<PointOfInterest {marker} index={i} />
+						<PointOfInterest {marker} index={i} bind:this={poiCards[marker.id]} />
 					{/each}
 				</div>
 			</div>
