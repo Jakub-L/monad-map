@@ -1,13 +1,25 @@
 <script lang="ts">
 	import { selectedMapId, maps } from '$lib/state.svelte';
+	import { nanoid } from 'nanoid';
 	import LoadMapDialog from './load-map-dialog.svelte';
 
-	const selectedId = selectedMapId.value;
-	const selectedMap = maps.value[selectedId];
-	let loadDialogOpen = false;
+	// STATE
+	const selectedId = $derived(selectedMapId.value);
+	const selectedMap = $derived(maps.value[selectedId]);
+	let loadDialogOpen = $state(false);
 
-	const clearMarkers = () => (selectedMap.markers = []);
+	// HANDLERS
 	const toggleLoadDialog = () => (loadDialogOpen = !loadDialogOpen);
+
+	/** Clones current map and activates it */
+	const cloneMap = () => {
+		const newMap = { ...selectedMap, name: `${selectedMap.name} (copy)`, id: nanoid() };
+		maps.value = { ...maps.value, [newMap.id]: newMap };
+		selectedMapId.value = newMap.id;
+	};
+
+	/** Clears all markers from the map */
+	const clearMap = () => (selectedMap.markers = []);
 </script>
 
 {#snippet toolbarButton(text: string, fn?: () => void)}
@@ -25,13 +37,13 @@
 		{@render toolbarButton('New')}
 		{@render toolbarButton('Load', toggleLoadDialog)}
 		{@render toolbarButton('Rename')}
-		{@render toolbarButton('Clone')}
+		{@render toolbarButton('Clone', cloneMap)}
 		<div class="h-6 border-l border-red-500/50"></div>
 		{@render toolbarButton('Export')}
 		{@render toolbarButton('Import')}
 		{@render toolbarButton('Print')}
 		<div class="h-6 border-l border-red-500/50"></div>
-		{@render toolbarButton('Clear', clearMarkers)}
+		{@render toolbarButton('Clear', clearMap)}
 		{@render toolbarButton('Delete')}
 	</div>
 </div>
