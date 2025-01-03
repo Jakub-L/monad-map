@@ -19,11 +19,11 @@
 	bind:open={isExpanded}
 >
 	<Collapsible.Trigger
-		class="group group flex min-h-8 min-w-8 items-center justify-center self-start rounded-full p-0.5 hover:bg-red-100/15 hover:text-red-500 active:bg-red-100/15 active:text-red-800"
+		class="group group flex min-h-8 min-w-8 items-center justify-center self-start rounded-full p-0.5 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:bg-red-700/60"
 	>
 		<IconDown
 			class={[
-				'h-5 w-5 transition-all duration-200 group-active:scale-90',
+				'h-5 w-5 transition-all duration-200 group-active:scale-95',
 				isExpanded && '-scale-100'
 			]}
 		/>
