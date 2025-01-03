@@ -12,7 +12,7 @@
 	<Dialog.Portal>
 		<Dialog.Overlay class="fixed inset-0 z-10 bg-slate-950/80" />
 		<Dialog.Content
-			class="truncated-rect fixed left-[50%] top-[50%] z-10 w-full max-w-fit translate-x-[-50%] translate-y-[-50%] border border-red-500 !bg-slate-950 p-2"
+			class="truncated-rect-8 fixed left-[50%] top-[50%] z-10 w-full max-w-fit translate-x-[-50%] translate-y-[-50%] border border-red-500 !bg-slate-950 p-2"
 		>
 			<Dialog.Title class="font-nova">Load a map</Dialog.Title>
 			<Dialog.Description></Dialog.Description>

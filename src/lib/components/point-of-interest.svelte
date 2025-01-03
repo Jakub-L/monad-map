@@ -14,7 +14,7 @@
 </script>
 
 <Collapsible.Root
-	class="truncated-rect flex w-full items-center overflow-x-clip border border-red-500 p-2"
+	class="truncated-rect-8 flex w-full items-center overflow-x-clip border border-red-500 p-2"
 	bind:open={isExpanded}
 >
 	<Collapsible.Trigger
