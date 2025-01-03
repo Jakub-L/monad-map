@@ -12,7 +12,7 @@
 	<Dialog.Portal>
 		<Dialog.Overlay class="fixed inset-0 z-10 bg-slate-950/80" />
 		<Dialog.Content
-			class="dialog-content fixed left-[50%] top-[50%] max-w-fit z-10 w-full translate-x-[-50%] translate-y-[-50%] border border-red-500 bg-slate-950 p-2"
+			class="truncated-rect fixed left-[50%] top-[50%] z-10 w-full max-w-fit translate-x-[-50%] translate-y-[-50%] border border-red-500 !bg-slate-950 p-2"
 		>
 			<Dialog.Title class="font-nova">Load a map</Dialog.Title>
 			<Dialog.Description></Dialog.Description>
@@ -23,18 +23,3 @@
 		</Dialog.Content>
 	</Dialog.Portal>
 </Dialog.Root>
-
-<style>
-	:global(.dialog-content) {
-		clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2rem), calc(100% - 2rem) 100%, 0 100%);
-		background:
-			linear-gradient(
-					135deg,
-					transparent calc(100% - (2rem / sqrt(2)) - 1px),
-					#ef4444 calc(100% - (2rem / sqrt(2)) - 1px)
-				)
-				bottom right,
-			#020617; /* slate-950 */
-		background-origin: border-box;
-	}
-</style>

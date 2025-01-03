@@ -14,8 +14,7 @@
 </script>
 
 <Collapsible.Root
-	id="container"
-	class="flex w-full items-center overflow-x-clip border border-red-500 p-2"
+	class="truncated-rect flex w-full items-center overflow-x-clip border border-red-500 p-2"
 	bind:open={isExpanded}
 >
 	<Collapsible.Trigger
@@ -40,16 +39,3 @@
 		</Collapsible.Content>
 	</div>
 </Collapsible.Root>
-
-<style>
-	:global(#container) {
-		clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2rem), calc(100% - 2rem) 100%, 0 100%);
-		background: linear-gradient(
-				135deg,
-				transparent calc(100% - (2rem / sqrt(2)) - 1px),
-				#ef4444 calc(100% - (2rem / sqrt(2)) - 1px)
-			)
-			bottom right;
-		background-origin: border-box;
-	}
-</style>
