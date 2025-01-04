@@ -32,7 +32,8 @@ export const selectedMapId = localStore<string>('monad/selectedMapId', '1');
 export const maps = localStore<Record<string, MonadMap>>('monad/maps', {
 	'1': {
 		id: '1',
-		name: 'Seattle',
+		name: 'Campaign map for Seattle',
+		lastEdited: Date.now(),
 		markers: [],
 		zoom: 14,
 		center: [-122.34062, 47.60556]

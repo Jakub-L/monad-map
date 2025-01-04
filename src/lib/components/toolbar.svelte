@@ -21,11 +21,13 @@
 
 	// HANDLERS
 	const toggleLoadDialog = () => (loadDialogOpen = !loadDialogOpen);
+	const updateEditTime = () => (selectedMap.lastEdited = Date.now());
 
 	const createNewMap = () => {
 		saveAndActivate({
 			id: nanoid(),
 			name: 'Unnamed map',
+			lastEdited: Date.now(),
 			center: DEFAULT_CENTER,
 			zoom: DEFAULT_ZOOM,
 			markers: []
@@ -43,7 +45,7 @@
 
 {#snippet toolbarButton(text: string, fn?: () => void)}
 	<button
-		class="h-10 min-w-20 rounded-full border border-red-500 px-2 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60"
+		class="h-10 min-w-20 rounded-full border border-red-500 bg-red-950/40 px-2 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60"
 		onclick={fn}>{text}</button
 	>
 {/snippet}
@@ -55,6 +57,7 @@
 		<input
 			class="h-10 rounded-r-full border border-red-500 bg-slate-950 px-2 py-1 font-nova text-xl focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400"
 			bind:value={selectedMap.name}
+			oninput={updateEditTime}
 		/>
 		<div class="h-6 border-l border-red-500/50"></div>
 		<div class="flex gap-2">
