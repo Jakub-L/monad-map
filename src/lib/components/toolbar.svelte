@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { nanoid } from 'nanoid';
-	import { DEFAULT_CENTER, DEFAULT_ZOOM } from '$lib/constants';
-	import { selectedMapId, maps } from '$lib/state.svelte';
-	import LoadMapDialog from '$lib/components/load-map-dialog.svelte';
+
 	import type { MonadMap } from '$lib/types';
+	import { DEFAULT_CENTER, DEFAULT_ZOOM } from '$lib/constants';
+
+	import { selectedMapId, maps } from '$lib/state.svelte';
+
+	import LoadMapDialog from '$lib/components/load-map-dialog.svelte';
 
 	// STATE
 	const selectedId = $derived(selectedMapId.value);
@@ -40,27 +43,36 @@
 
 {#snippet toolbarButton(text: string, fn?: () => void)}
 	<button
-		class="min-w-20 rounded-full border border-red-500 px-2 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60"
+		class="h-10 min-w-20 rounded-full border border-red-500 px-2 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60"
 		onclick={fn}>{text}</button
 	>
 {/snippet}
 
-<div class="flex items-center gap-6">
-	<h1 class="m-2 font-nova text-3xl uppercase">Monad//Map</h1>
+<div class="flex h-16 items-center gap-6">
+	<h1 class="ml-2 font-nova text-3xl uppercase">Monad//Map</h1>
 	<div class="h-8 border-l border-red-500/50"></div>
-	<span class="font-nova text-xl">{selectedMap.name ?? 'No map loaded'}</span>
-	<div class="flex items-center gap-2">
-		{@render toolbarButton('New', createNewMap)}
-		{@render toolbarButton('Load', toggleLoadDialog)}
-		{@render toolbarButton('Rename')}
-		{@render toolbarButton('Clone', cloneMap)}
+	<div class="flex items-center gap-4">
+		<input
+			class="h-10 rounded-r-full border border-red-500 bg-slate-950 px-2 py-1 font-nova text-xl focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400"
+			bind:value={selectedMap.name}
+		/>
 		<div class="h-6 border-l border-red-500/50"></div>
-		{@render toolbarButton('Export')}
-		{@render toolbarButton('Import')}
-		{@render toolbarButton('Print')}
+		<div class="flex gap-2">
+			{@render toolbarButton('New', createNewMap)}
+			{@render toolbarButton('Load', toggleLoadDialog)}
+			{@render toolbarButton('Clone', cloneMap)}
+		</div>
 		<div class="h-6 border-l border-red-500/50"></div>
-		{@render toolbarButton('Clear', clearMap)}
-		{@render toolbarButton('Delete')}
+		<div class="flex gap-2">
+			{@render toolbarButton('Export')}
+			{@render toolbarButton('Import')}
+			{@render toolbarButton('Print')}
+		</div>
+		<div class="h-6 border-l border-red-500/50"></div>
+		<div class="flex gap-2">
+			{@render toolbarButton('Clear', clearMap)}
+			{@render toolbarButton('Delete')}
+		</div>
 	</div>
+	<LoadMapDialog bind:open={loadDialogOpen} />
 </div>
-<LoadMapDialog bind:open={loadDialogOpen} />

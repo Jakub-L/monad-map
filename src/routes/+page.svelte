@@ -60,7 +60,7 @@
 					<h2 class="text-xl">Points of Interest</h2>
 					<span class="text-lg">{selectedMap.markers.length}/{MAX_MARKERS}</span>
 				</div>
-				<div id="poi-list" class="my-2 flex flex-col gap-4 overflow-y-auto">
+				<div id="poi-list" class="my-2 flex flex-col gap-4 overflow-y-auto pr-2">
 					{#each selectedMap.markers as marker, i (marker.id)}
 						<PointOfInterest {marker} index={i} bind:this={poiCards[marker.id]} />
 					{/each}
