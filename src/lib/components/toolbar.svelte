@@ -53,11 +53,12 @@
 <div class="flex h-16 items-center gap-6">
 	<h1 class="ml-2 font-nova text-3xl uppercase">Monad//Map</h1>
 	<div class="h-8 border-l border-red-500/50"></div>
-	<div class="grow flex items-center justify-stretch gap-4 pr-4">
+	<div class="flex grow items-center justify-stretch gap-4 pr-4">
 		<input
-			class="h-10 grow max-w-96 rounded-r-full border border-red-500 bg-slate-950 px-2 py-1 font-nova text-xl focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400"
+			class="h-10 max-w-96 grow rounded-r-full border border-red-500 bg-red-950/40 px-2 py-1 font-nova text-xl hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80"
 			bind:value={selectedMap.name}
 			oninput={updateEditTime}
+			aria-label="Map name"
 		/>
 		<div class="h-6 border-l border-red-500/50"></div>
 		<div class="flex gap-2">
