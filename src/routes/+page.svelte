@@ -16,9 +16,9 @@
 
 	// State
 	import { selectedMapId, maps } from '$lib/state.svelte';
-	const selectedId: string = selectedMapId.value;
-	const selectedMap: MonadMap = maps.value[selectedId];
-	const poiCards: Record<string, any> = {};
+	const selectedId: string = $derived(selectedMapId.value);
+	const selectedMap: MonadMap = $derived(maps.value[selectedId]);
+	const poiCards: Record<string, any> = $state({});
 
 	// Handlers
 	const addMarker = ({ lngLat }: MapMouseEvent) => {
