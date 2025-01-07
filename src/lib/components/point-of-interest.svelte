@@ -25,8 +25,8 @@
 
 	// Handlers
 	const onEdit = () => {
-		editTitle = marker.title;
-		editDescription = marker.description;
+		editTitle = marker.title.trim();
+		editDescription = marker.description.trim();
 		isEditing = true;
 	};
 
@@ -85,7 +85,15 @@
 			{/if}
 		</div>
 	</div>
-	<p class="border-t border-red-500/50 pt-1 text-sm opacity-85">
-		{marker.description}
-	</p>
+	{#if isEditing}
+		<textarea
+			class="rounded-r-[1.25rem] border border-red-500 bg-red-950/40 p-1 text-left text-sm hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80"
+			rows={4}
+			bind:value={editDescription}
+		></textarea>
+	{:else}
+		<p class="border-t border-red-500/50 pt-1 text-sm opacity-85">
+			{marker.description}
+		</p>
+	{/if}
 </div>
