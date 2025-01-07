@@ -30,6 +30,15 @@
 			description:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo vestibulum, pulvinar urna non, ornare nisi. Pellentesque dignissim tincidunt leo a pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer lorem nulla, mollis laoreet bibendum id, gravida in risus. Mauris facilisis mi volutpat ipsum dapibus, et molestie sapien finibus augue.'
 		} as PoI);
+		updateEditTime();
+	};
+
+	const deleteMarker = (id: string) => {
+		selectedMap.markers = selectedMap.markers.filter((marker) => marker.id !== id);
+		updateEditTime();
+	};
+
+	const updateEditTime = () => {
 		selectedMap.lastEdited = Date.now();
 	};
 </script>
@@ -61,9 +70,15 @@
 					<h2 class="text-xl">Points of Interest</h2>
 					<span class="text-lg">{selectedMap.markers.length}/{MAX_MARKERS}</span>
 				</div>
-				<div id="poi-list" class="my-2 flex flex-col gap-4 overflow-y-auto pr-2">
+				<div id="poi-list" class="my-2 flex flex-col gap-4 overflow-y-auto">
 					{#each selectedMap.markers as marker, i (marker.id)}
-						<PointOfInterest {marker} index={i} bind:this={poiCards[marker.id]} />
+						<PointOfInterest
+							{marker}
+							index={i}
+							bind:this={poiCards[marker.id]}
+							onUpdateEditTime={updateEditTime}
+							onDeleteMarker={() => deleteMarker(marker.id)}
+						/>
 					{/each}
 				</div>
 			</div>
