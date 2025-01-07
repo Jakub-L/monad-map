@@ -6,6 +6,7 @@
 	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
 	import PointOfInterest from '$lib/components/point-of-interest.svelte';
 	import Toolbar from '$lib/components/toolbar.svelte';
+	import IconMapPin from '~icons/ion/location-outline';
 
 	// Types
 	import type { MapMouseEvent } from 'maplibre-gl';
@@ -70,16 +71,27 @@
 					<h2 class="text-xl">Points of Interest</h2>
 					<span class="text-lg">{selectedMap.markers.length}/{MAX_MARKERS}</span>
 				</div>
-				<div id="poi-list" class="my-2 flex flex-col gap-4 overflow-y-auto">
-					{#each selectedMap.markers as marker, i (marker.id)}
-						<PointOfInterest
-							{marker}
-							index={i}
-							bind:this={poiCards[marker.id]}
-							onUpdateEditTime={updateEditTime}
-							onDeleteMarker={() => deleteMarker(marker.id)}
-						/>
-					{/each}
+				<div id="poi-list" class="my-2 flex h-full flex-col gap-4 overflow-y-auto">
+					{#if selectedMap.markers.length === 0}
+						<div
+							id="marker-placeholder"
+							class="flex grow flex-col items-center justify-center !bg-red-950/40 p-8 opacity-90"
+						>
+							<IconMapPin class="mb-4 size-10 opacity-70" />
+							<span class="font-nova text-lg">No points of interest.</span>
+							<span class="text-sm">Click on the map to add a marker.</span>
+						</div>
+					{:else}
+						{#each selectedMap.markers as marker, i (marker.id)}
+							<PointOfInterest
+								{marker}
+								index={i}
+								bind:this={poiCards[marker.id]}
+								onUpdateEditTime={updateEditTime}
+								onDeleteMarker={() => deleteMarker(marker.id)}
+							/>
+						{/each}
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -89,5 +101,17 @@
 <style>
 	#poi-list {
 		max-height: calc(100dvh - 7rem);
+	}
+
+	#marker-placeholder {
+		clip-path: polygon(
+			0 0,
+			100% 0,
+			100% calc(100% - theme('size.8')),
+			calc(100% - theme('size.8')) 100%,
+			0 100%
+		);
+		background: linear-gradient(135deg, transparent calc(100% - (theme('size.8') / sqrt(2)) - 1px))
+			bottom right;
 	}
 </style>
