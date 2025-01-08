@@ -4,6 +4,8 @@
 
 	import { MAX_DESCRIPTION, MAX_TITLE } from '$lib/constants';
 
+	import IconButton from './icon-button.svelte';
+
 	// Icons
 	import IconCheck from '~icons/ion/checkmark-sharp';
 	import IconClose from '~icons/ion/close-sharp';
@@ -54,17 +56,6 @@
 	};
 </script>
 
-{#snippet iconButton(label: string, Icon: Component, fn?: () => void)}
-	<button
-		class="flex min-h-8 min-w-8 items-center justify-center rounded-full p-0.5 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:bg-red-700/60"
-		onclick={fn}
-		aria-label={label}
-		title={label}
-	>
-		<Icon class="h-5 w-5"></Icon>
-	</button>
-{/snippet}
-
 <div class="truncated-rect-8 flex w-full flex-col gap-1 border border-red-500 p-2">
 	<div class="flex items-center gap-2">
 		<span class="min-w-6 text-center font-nova text-xl">{index + 1}</span>
@@ -84,11 +75,11 @@
 		{/if}
 		<div class="mr-2 flex gap-1">
 			{#if isEditing}
-				{@render iconButton('Save', IconCheck, onSave)}
-				{@render iconButton('Cancel', IconClose, onCancel)}
+				<IconButton label="Save" Icon={IconCheck} onClick={onSave} />
+				<IconButton label="Cancel" Icon={IconClose} onClick={onCancel} />
 			{:else}
-				{@render iconButton('Edit', IconEdit, onEdit)}
-				{@render iconButton('Delete', IconTrash, onDelete)}
+				<IconButton label="Edit" Icon={IconEdit} onClick={onEdit} />
+				<IconButton label="Delete" Icon={IconTrash} onClick={onDelete} />
 			{/if}
 		</div>
 	</div>
