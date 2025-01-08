@@ -1,4 +1,5 @@
 export const MAX_MARKERS: number = 50;
+export const MAX_MAP_NAME: number = 100;
 
 // MAP SPECIFIC
 export const DEFAULT_CENTER: [number, number] = [-122.34062, 47.60556];

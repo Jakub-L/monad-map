@@ -2,7 +2,7 @@
 	import { nanoid } from 'nanoid';
 
 	import type { MonadMap } from '$lib/types';
-	import { DEFAULT_CENTER, DEFAULT_ZOOM } from '$lib/constants';
+	import { DEFAULT_CENTER, DEFAULT_ZOOM, MAX_MAP_NAME } from '$lib/constants';
 
 	import { selectedMapId, maps } from '$lib/state.svelte';
 
@@ -59,6 +59,7 @@
 			bind:value={selectedMap.name}
 			oninput={updateEditTime}
 			aria-label="Map name"
+			maxlength={MAX_MAP_NAME}
 		/>
 		<div class="h-6 border-l border-red-500/50"></div>
 		<div class="flex gap-2">
