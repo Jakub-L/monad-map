@@ -47,11 +47,11 @@
 <div class="flex h-full max-h-full flex-col">
 	<Toolbar />
 	{#if selectedMap}
-		<div class="grid max-h-full grow grid-cols-3 gap-2">
+		<div class="grid max-h-full grow grid-rows-2 lg:grid-cols-3 gap-2 lg:grid-rows-1">
 			<MapLibre
 				style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
 				standardControls
-				class="col-span-2 mb-2 ml-2"
+				class="lg:col-span-2"
 				bind:zoom={selectedMap.zoom}
 				bind:center={selectedMap.center}
 			>
@@ -66,12 +66,12 @@
 					</Marker>
 				{/each}
 			</MapLibre>
-			<div class="flex max-h-full flex-col pr-2">
-				<div class="flex items-center justify-between font-nova">
+			<div class="flex max-h-full flex-col gap-2">
+				<div class="flex items-center justify-between font-nova px-2 lg:pl-0">
 					<h2 class="text-xl">Points of Interest</h2>
 					<span class="text-lg">{selectedMap.markers.length}/{MAX_MARKERS}</span>
 				</div>
-				<div id="poi-list" class="my-2 flex h-full flex-col gap-4 overflow-y-auto">
+				<div id="poi-list" class="flex h-full flex-col overflow-y-auto gap-2 px-2 lg:pl-0">
 					{#if selectedMap.markers.length === 0}
 						<div
 							id="marker-placeholder"
@@ -100,7 +100,13 @@
 
 <style>
 	#poi-list {
-		max-height: calc(100dvh - 7rem);
+		max-height: calc(100dvh - 6rem);
+	}
+
+	@media (max-width: theme('screens.lg')) {
+		#poi-list {
+			max-height: calc((100dvh - 9rem) / 2);
+		}
 	}
 
 	#marker-placeholder {

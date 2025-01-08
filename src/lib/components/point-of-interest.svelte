@@ -69,7 +69,7 @@
 				bind:value={editTitle}
 			/>
 		{:else}
-			<div class="flex h-9 grow items-center px-[5px]">
+			<div class="flex min-h-9 grow items-center px-[5px]">
 				<h3 class="font-nova">{marker.title || 'No point of interest title'}</h3>
 			</div>
 		{/if}
