@@ -54,9 +54,12 @@
 	>
 {/snippet}
 
-{#snippet dropdownMenuItem(text: string, fn?: () => void)}
+{#snippet dropdownMenuItem(text: string, fn?: () => void, classOverrides?: string)}
 	<DropdownMenu.Item
-		class="flex   h-10 items-center rounded-full px-4 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60"
+		class={[
+			'flex h-10 items-center rounded-full px-4 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60',
+			classOverrides
+		]}
 		onclick={fn}
 	>
 		{text}
@@ -76,50 +79,49 @@
 	/>
 {/snippet}
 
-<div class="flex items-center justify-between gap-6 p-2">
+<div class="flex items-center gap-4 p-2">
 	<h1 class="font-nova text-3xl uppercase">Monad//Map</h1>
-	<div class="hidden h-8 border-l border-red-500/50 lg:block"></div>
-	<div class="hidden grow items-center justify-stretch gap-4 pr-4 lg:flex">
-		{@render mapNameInput('max-w-96')}
-		<div class="h-6 border-l border-red-500/50"></div>
-		<div class="flex gap-2">
-			{@render toolbarButton('New', createNewMap)}
-			{@render toolbarButton('Load', toggleLoadDialog)}
-			{@render toolbarButton('Clone', cloneMap)}
-		</div>
-		<div class="h-6 border-l border-red-500/50"></div>
-		<div class="flex gap-2">
-			{@render toolbarButton('Export')}
-			{@render toolbarButton('Import')}
-			{@render toolbarButton('Print')}
-			{@render toolbarButton('Share')}
-		</div>
-		<div class="h-6 border-l border-red-500/50"></div>
-		<div class="flex gap-2">
-			{@render toolbarButton('Clear', clearMap)}
-			{@render toolbarButton('Delete')}
-		</div>
+	<div class="mx-2 hidden h-8 border-l border-red-500/50 sm:block"></div>
+	{@render mapNameInput('hidden sm:block md:max-w-96')}
+	<div class="hidden h-6 border-l border-red-500/50 lg:block"></div>
+	<div class="hidden gap-2 lg:flex">
+		{@render toolbarButton('New', createNewMap)}
+		{@render toolbarButton('Load', toggleLoadDialog)}
+		{@render toolbarButton('Clone', cloneMap)}
 	</div>
+	<div class="hidden h-6 border-l border-red-500/50 xl:block"></div>
+	<div class="hidden gap-2 xl:flex">
+		{@render toolbarButton('Export')}
+		{@render toolbarButton('Import')}
+		{@render toolbarButton('Print')}
+		{@render toolbarButton('Share')}
+	</div>
+	<div class="hidden h-6 border-l border-red-500/50 2xl:block"></div>
+	<div class="hidden gap-2 2xl:flex">
+		{@render toolbarButton('Clear', clearMap)}
+		{@render toolbarButton('Delete')}
+	</div>
+	<div class="grow"></div>
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger
-			class="flex min-h-12 min-w-12 items-center justify-center rounded-full p-0.5 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:bg-red-700/60 md:min-h-8 md:min-w-8 lg:hidden"
+			class="flex min-h-12 min-w-12 items-center justify-center rounded-full p-0.5 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:bg-red-700/60 md:min-h-8 md:min-w-8 2xl:hidden"
 			aria-label="Menu"
 		>
 			<IconMenu class="size-6 md:size-5" />
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content
-			class="z-20 -ml-2 mt-2 flex w-full flex-col gap-2 rounded-b-[1.25rem] border-b border-red-500 bg-slate-950 p-4"
+			class="z-20 -ml-2 mt-2 flex w-full flex-col gap-2 rounded-b-[1.25rem] border-b md:border-x border-red-500 bg-slate-950 p-4 md:w-1/2 md:ml-2 lg:w-1/4 2xl:hidden"
 		>
-			{@render mapNameInput()}
-			{@render dropdownMenuItem('New', createNewMap)}
-			{@render dropdownMenuItem('Load', toggleLoadDialog)}
-			{@render dropdownMenuItem('Clone', cloneMap)}
-			<DropdownMenu.Separator class="border-t border-red-500/50" />
-			{@render dropdownMenuItem('Export')}
-			{@render dropdownMenuItem('Import')}
-			{@render dropdownMenuItem('Print')}
-			{@render dropdownMenuItem('Share')}
-			<DropdownMenu.Separator class="border-t border-red-500/50" />
+			{@render mapNameInput('sm:hidden')}
+			{@render dropdownMenuItem('New', createNewMap, 'lg:hidden')}
+			{@render dropdownMenuItem('Load', toggleLoadDialog, 'lg:hidden')}
+			{@render dropdownMenuItem('Clone', cloneMap, 'lg:hidden')}
+			<DropdownMenu.Separator class="border-t border-red-500/50 lg:hidden" />
+			{@render dropdownMenuItem('Export', () => {}, 'xl:hidden')}
+			{@render dropdownMenuItem('Import', () => {}, 'xl:hidden')}
+			{@render dropdownMenuItem('Print', () => {}, 'xl:hidden')}
+			{@render dropdownMenuItem('Share', () => {}, 'xl:hidden')}
+			<DropdownMenu.Separator class="border-t border-red-500/50 xl:hidden" />
 			{@render dropdownMenuItem('Clear', clearMap)}
 			{@render dropdownMenuItem('Delete')}
 		</DropdownMenu.Content>
