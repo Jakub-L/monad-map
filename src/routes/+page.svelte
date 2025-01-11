@@ -3,7 +3,7 @@
 	import { nanoid } from 'nanoid';
 
 	// Components
-	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
+	import PrintableMap from '$lib/components/printable-map.svelte';
 	import PointOfInterest from '$lib/components/point-of-interest.svelte';
 	import Toolbar from '$lib/components/toolbar.svelte';
 	import IconMapPin from '~icons/ion/location-outline';
@@ -47,31 +47,20 @@
 <div class="flex h-full max-h-full flex-col">
 	<Toolbar />
 	{#if selectedMap}
-		<div class="grid max-h-full grow grid-rows-2 lg:grid-cols-3 gap-2 lg:grid-rows-1">
-			<MapLibre
-				style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-				standardControls
-				class="lg:col-span-2"
+		<div class="grid max-h-full grow grid-rows-2 gap-2 lg:grid-cols-3 lg:grid-rows-1">
+			<PrintableMap
+				markers={selectedMap.markers}
 				bind:zoom={selectedMap.zoom}
 				bind:center={selectedMap.center}
-			>
-				<MapEvents onclick={addMarker} />
-				{#each selectedMap.markers as marker, i (marker.id)}
-					<Marker
-						draggable
-						bind:lngLat={marker.lngLat}
-						class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl hover:bg-green-300 focus:outline-2 focus:outline-black"
-					>
-						<span>{i + 1}</span>
-					</Marker>
-				{/each}
-			</MapLibre>
+				{addMarker}
+				class="lg:col-span-2"
+			/>
 			<div class="flex max-h-full flex-col gap-2">
-				<div class="flex items-center justify-between font-nova px-2 lg:pl-0">
+				<div class="flex items-center justify-between px-2 font-nova lg:pl-0">
 					<h2 class="text-xl">Points of Interest</h2>
 					<span class="text-lg">{selectedMap.markers.length}/{MAX_MARKERS}</span>
 				</div>
-				<div id="poi-list" class="flex h-full flex-col overflow-y-auto gap-2 px-2 lg:pl-0">
+				<div id="poi-list" class="flex h-full flex-col gap-2 overflow-y-auto px-2 lg:pl-0">
 					{#if selectedMap.markers.length === 0}
 						<div
 							id="marker-placeholder"
