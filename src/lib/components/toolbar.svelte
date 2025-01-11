@@ -11,6 +11,7 @@
 	import IconMenu from '~icons/ion/menu-sharp';
 	import IconButton from './base/icon-button.svelte';
 	import { DropdownMenu } from 'bits-ui';
+	import Input from './base/input.svelte';
 
 	// STATE
 	const selectedId = $derived(selectedMapId.value);
@@ -61,15 +62,13 @@
 {/snippet}
 
 {#snippet mapNameInput(classOverrides?: string)}
-	<input
-		class={[
-			'h-10 grow rounded-r-full border border-red-500 bg-red-950/40 px-2 py-1 font-nova text-xl hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80',
-			classOverrides
-		]}
+	<Input
+		classOverrides={`h-10 font-nova text-xl rounded-r-full ${classOverrides}`}
 		bind:value={selectedMap.name}
-		oninput={updateEditTime}
-		aria-label="Map name"
-		maxlength={MAX_MAP_NAME}
+		onInput={updateEditTime}
+		title="Map name"
+		maxLength={MAX_MAP_NAME}
+		placeholder="Map name"
 	/>
 {/snippet}
 

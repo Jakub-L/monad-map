@@ -11,6 +11,7 @@
 	import IconClose from '~icons/ion/close-sharp';
 	import IconEdit from '~icons/ion/edit';
 	import IconTrash from '~icons/ion/trash-bin-sharp';
+	import Input from './base/input.svelte';
 
 	// Props
 	interface Props {
@@ -60,13 +61,13 @@
 	<div class="flex items-center gap-2">
 		<span class="min-w-6 text-center font-nova text-xl">{index + 1}</span>
 		{#if isEditing}
-			<input
-				class="h-9 grow rounded-r-full border border-red-500 bg-red-950/40 p-1 font-nova hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80"
-				name="title"
-				onkeydown={onKeyDown}
-				maxlength={MAX_TITLE}
-				placeholder="Enter location title..."
+			<Input
+				{onKeyDown}
 				bind:value={editTitle}
+				classOverrides="font-nova"
+				maxLength={MAX_TITLE}
+				placeholder="Enter location title..."
+				title="Point of interest title"
 			/>
 		{:else}
 			<div class="flex min-h-9 grow items-center px-[5px]">
@@ -88,15 +89,15 @@
 			<span class="flex justify-end pr-3 text-xs lowercase">
 				{editDescription.length}/{MAX_DESCRIPTION}
 			</span>
-			<textarea
+			<Input
+				{onKeyDown}
+				classOverrides="mb-2 text-sm"
+				isTextarea
+				maxLength={MAX_DESCRIPTION}
 				placeholder="Enter location description..."
-				name="description"
-				class="mb-2 rounded-r-[1.25rem] border border-red-500 bg-red-950/40 p-1 text-left text-sm placeholder:text-red-50/90 hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80"
-				rows={4}
-				maxlength={MAX_DESCRIPTION}
+				title="Point of interest description"
 				bind:value={editDescription}
-				onkeydown={onKeyDown}
-			></textarea>
+			/>
 		</div>
 	{:else}
 		<p
@@ -107,8 +108,4 @@
 	{/if}
 </div>
 
-<style>
-	textarea {
-		field-sizing: content;
-	}
-</style>
+
