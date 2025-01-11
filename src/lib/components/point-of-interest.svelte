@@ -4,7 +4,7 @@
 
 	import { MAX_DESCRIPTION, MAX_TITLE } from '$lib/constants';
 
-	import IconButton from './icon-button.svelte';
+	import IconButton from './base/icon-button.svelte';
 
 	// Icons
 	import IconCheck from '~icons/ion/checkmark-sharp';

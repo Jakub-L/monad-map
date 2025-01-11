@@ -6,11 +6,11 @@
 
 	import { selectedMapId, maps } from '$lib/state.svelte';
 
-	import LoadMapDialog from '$lib/components/load-map-dialog.svelte';
+	import LoadMapDialog from '$lib/components/dialogs/load-map.svelte';
+	import Button from '$lib/components/base/button.svelte';
 	import IconMenu from '~icons/ion/menu-sharp';
-	import IconButton from './icon-button.svelte';
+	import IconButton from './base/icon-button.svelte';
 	import { DropdownMenu } from 'bits-ui';
-	import { draw, slide } from 'svelte/transition';
 
 	// STATE
 	const selectedId = $derived(selectedMapId.value);
@@ -47,13 +47,7 @@
 	const clearMap = () => (selectedMap.markers = []);
 </script>
 
-{#snippet toolbarButton(text: string, fn?: () => void)}
-	<button
-		class="h-10 min-w-20 rounded-full border border-red-500 bg-red-950/40 px-2 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60"
-		onclick={fn}>{text}</button
-	>
-{/snippet}
-
+<!-- SNIPPETS -->
 {#snippet dropdownMenuItem(text: string, fn?: () => void, classOverrides?: string)}
 	<DropdownMenu.Item
 		class={[
@@ -79,27 +73,28 @@
 	/>
 {/snippet}
 
+<!-- COMPONENT -->
 <div class="flex items-center gap-4 p-2">
 	<h1 class="font-nova text-3xl uppercase">Monad//Map</h1>
 	<div class="mx-2 hidden h-8 border-l border-red-500/50 sm:block"></div>
 	{@render mapNameInput('hidden sm:block md:max-w-96')}
 	<div class="hidden h-6 border-l border-red-500/50 lg:block"></div>
 	<div class="hidden gap-2 lg:flex">
-		{@render toolbarButton('New', createNewMap)}
-		{@render toolbarButton('Load', toggleLoadDialog)}
-		{@render toolbarButton('Clone', cloneMap)}
+		<Button onClick={createNewMap}>New</Button>
+		<Button onClick={toggleLoadDialog}>Load</Button>
+		<Button onClick={cloneMap}>Clone</Button>
 	</div>
 	<div class="hidden h-6 border-l border-red-500/50 xl:block"></div>
 	<div class="hidden gap-2 xl:flex">
-		{@render toolbarButton('Export')}
-		{@render toolbarButton('Import')}
-		{@render toolbarButton('Print')}
-		{@render toolbarButton('Share')}
+		<Button onClick={() => {}}>Export</Button>
+		<Button onClick={() => {}}>Import</Button>
+		<Button onClick={() => {}}>Print</Button>
+		<Button onClick={() => {}}>Share</Button>
 	</div>
 	<div class="hidden h-6 border-l border-red-500/50 2xl:block"></div>
 	<div class="hidden gap-2 2xl:flex">
-		{@render toolbarButton('Clear', clearMap)}
-		{@render toolbarButton('Delete')}
+		<Button onClick={clearMap}>Clear</Button>
+		<Button onClick={() => {}}>Delete</Button>
 	</div>
 	<div class="grow"></div>
 	<DropdownMenu.Root>
@@ -110,7 +105,7 @@
 			<IconMenu class="size-6 md:size-5" />
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content
-			class="z-20 -ml-2 mt-2 flex w-full flex-col gap-2 rounded-b-[1.25rem] border-b md:border-x border-red-500 bg-slate-950 p-4 md:w-1/2 md:ml-2 lg:w-1/4 2xl:hidden"
+			class="z-20 -ml-2 mt-2 flex w-full flex-col gap-2 rounded-b-[1.25rem] border-b border-red-500 bg-slate-950 p-4 md:ml-2 md:w-1/2 md:border-x lg:w-1/4 2xl:hidden"
 		>
 			{@render mapNameInput('sm:hidden')}
 			{@render dropdownMenuItem('New', createNewMap, 'lg:hidden')}
