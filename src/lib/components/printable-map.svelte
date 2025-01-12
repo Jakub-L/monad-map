@@ -21,23 +21,7 @@
 
 <MapLibre
 	style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-	class={`${mapClasses} hidden min-w-full print:block`}
-	bind:zoom
-	bind:center
->
-	{#each markers as marker, i (marker.id)}
-		<Marker
-			bind:lngLat={marker.lngLat}
-			class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl hover:bg-green-300 focus:outline-2 focus:outline-black"
-		>
-			<span>{i + 1}</span>
-		</Marker>
-	{/each}
-</MapLibre>
-
-<MapLibre
-	style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-	class={`${mapClasses} print:hidden`}
+	class={mapClasses}
 	standardControls
 	bind:zoom
 	bind:center
