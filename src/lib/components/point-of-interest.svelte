@@ -57,7 +57,9 @@
 	};
 </script>
 
-<div class="truncated-rect-8 flex w-full flex-col gap-1 border border-red-500 p-2">
+<div
+	class="truncated-rect-8 flex w-full break-inside-avoid flex-col gap-1 border border-red-500 p-2 print:border-red-900"
+>
 	<div class="flex items-center gap-2">
 		<span class="min-w-6 text-center font-nova text-xl">{index + 1}</span>
 		{#if isEditing}
@@ -101,11 +103,9 @@
 		</div>
 	{:else}
 		<p
-			class="mb-2 mr-2 whitespace-pre-wrap border-t border-red-500/50 px-1 pt-1 text-sm opacity-85"
+			class="mb-2 mr-2 whitespace-pre-wrap border-t border-red-500/50 px-1 pt-1 text-sm opacity-85 print:opacity-95 print:border-red-900/50"
 		>
 			{marker.description || 'No point of interest description.'}
 		</p>
 	{/if}
 </div>
-
-

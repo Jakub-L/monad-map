@@ -75,22 +75,23 @@
 <!-- COMPONENT -->
 <div class="flex items-center gap-4 p-2">
 	<h1 class="font-nova text-3xl uppercase">Monad//Map</h1>
-	<div class="mx-2 hidden h-8 border-l border-red-500/50 sm:block"></div>
+	<div class="mx-2 hidden h-8 border-l border-red-500/50 sm:block print:border-red-700"></div>
+	<h2 class="hidden h-10 items-center font-nova text-xl print:flex">{selectedMap.name}</h2>
 	{@render mapNameInput('hidden sm:block md:max-w-96')}
-	<div class="hidden h-6 border-l border-red-500/50 lg:block"></div>
+	<div class="hidden h-6 border-l border-red-500/50 lg:block print:hidden"></div>
 	<div class="hidden gap-2 lg:flex">
 		<Button onClick={createNewMap}>New</Button>
 		<Button onClick={toggleLoadDialog}>Load</Button>
 		<Button onClick={cloneMap}>Clone</Button>
 	</div>
-	<div class="hidden h-6 border-l border-red-500/50 xl:block"></div>
+	<div class="hidden h-6 border-l border-red-500/50 xl:block print:hidden"></div>
 	<div class="hidden gap-2 xl:flex">
 		<Button onClick={() => {}}>Export</Button>
 		<Button onClick={() => {}}>Import</Button>
 		<Button onClick={() => {}}>Print</Button>
 		<Button onClick={() => {}}>Share</Button>
 	</div>
-	<div class="hidden h-6 border-l border-red-500/50 2xl:block"></div>
+	<div class="hidden h-6 border-l border-red-500/50 2xl:block print:hidden"></div>
 	<div class="hidden gap-2 2xl:flex">
 		<Button onClick={clearMap}>Clear</Button>
 		<Button onClick={() => {}}>Delete</Button>
@@ -98,7 +99,7 @@
 	<div class="grow"></div>
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger
-			class="flex min-h-12 min-w-12 items-center justify-center rounded-full p-0.5 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:bg-red-700/60 md:min-h-8 md:min-w-8 2xl:hidden"
+			class="flex min-h-12 min-w-12 items-center justify-center rounded-full p-0.5 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:bg-red-700/60 md:min-h-8 md:min-w-8 2xl:hidden print:hidden"
 			aria-label="Menu"
 		>
 			<IconMenu class="size-6 md:size-5" />

@@ -54,19 +54,9 @@
 	background-origin: border-box;
 }
 
-.truncated-rect-4 {
-	clip-path: polygon(
-		0 0,
-		100% 0,
-		100% calc(100% - theme('size.4')),
-		calc(100% - theme('size.4')) 100%,
-		0 100%
-	);
-	background: linear-gradient(
-			135deg,
-			transparent calc(100% - (theme('size.4') / sqrt(2)) - 1px),
-			theme('colors.red.500') calc(100% - (theme('size.4') / sqrt(2)) - 1px)
-		)
-		bottom right;
-	background-origin: border-box;
+@media print {
+	.truncated-rect-8 {
+		clip-path: none;
+		background: transparent;
+	}
 }

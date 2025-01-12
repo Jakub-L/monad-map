@@ -44,10 +44,12 @@
 	};
 </script>
 
-<div class="flex h-full max-h-full flex-col">
+<div class="flex h-full max-h-full flex-col print:min-w-3xl print:min-w-3xl">
 	<Toolbar />
 	{#if selectedMap}
-		<div class="grid max-h-full grow grid-rows-2 gap-2 lg:grid-cols-3 lg:grid-rows-1">
+		<div
+			class="grid max-h-full grow grid-rows-2 gap-2 lg:grid-cols-3 lg:grid-rows-1 print:grid-cols-1 print:grid-rows-2 print:gap-0"
+		>
 			<PrintableMap
 				markers={selectedMap.markers}
 				bind:zoom={selectedMap.zoom}
@@ -58,9 +60,12 @@
 			<div class="flex max-h-full flex-col gap-2">
 				<div class="flex items-center justify-between px-2 font-nova lg:pl-0">
 					<h2 class="text-xl">Points of Interest</h2>
-					<span class="text-lg">{selectedMap.markers.length}/{MAX_MARKERS}</span>
+					<span class="text-lg print:hidden">{selectedMap.markers.length}/{MAX_MARKERS}</span>
 				</div>
-				<div id="poi-list" class="flex h-full flex-col gap-2 overflow-y-auto px-2 lg:pl-0">
+				<div
+					id="poi-list"
+					class="flex h-full flex-col gap-2 overflow-y-auto px-2 lg:pl-0 print:overflow-y-visible"
+				>
 					{#if selectedMap.markers.length === 0}
 						<div
 							id="marker-placeholder"
