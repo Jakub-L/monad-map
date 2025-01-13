@@ -7,6 +7,7 @@
 		center?: [number, number];
 		class?: string;
 		markers: PoI[];
+		readOnly?: boolean;
 		addMarker: (event: any) => void;
 	}
 
@@ -15,6 +16,7 @@
 		center = $bindable(),
 		class: mapClasses,
 		markers = [],
+		readOnly,
 		addMarker
 	}: Props = $props();
 </script>
@@ -22,14 +24,15 @@
 <MapLibre
 	style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
 	class={mapClasses}
+	standardControls={!readOnly}
 	standardControls
 	bind:zoom
 	bind:center
 >
-	<MapEvents onclick={addMarker} />
+	<MapEvents onclick={(e) => !readOnly && addMarker(e)} />
 	{#each markers as marker, i (marker.id)}
 		<Marker
-			draggable
+			draggable={!readOnly}
 			bind:lngLat={marker.lngLat}
 			class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl hover:bg-green-300 focus:outline-2 focus:outline-black"
 		>

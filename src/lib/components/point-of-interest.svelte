@@ -17,11 +17,12 @@
 	interface Props {
 		marker: PoI;
 		index: number;
+		readOnly?: boolean;
 		onUpdateEditTime: () => void;
 		onDeleteMarker: (id: string) => void;
 	}
 
-	let { marker, index, onUpdateEditTime, onDeleteMarker }: Props = $props();
+	let { marker, index, readOnly, onUpdateEditTime, onDeleteMarker }: Props = $props();
 
 	// State
 	let isEditing: boolean = $state(false);
@@ -76,7 +77,7 @@
 				<h3 class="font-nova">{marker.title || 'No point of interest title'}</h3>
 			</div>
 		{/if}
-		<div class="mr-2 flex gap-1">
+		<div class={["mr-2 flex gap-1", readOnly && '!hidden']}>
 			{#if isEditing}
 				<IconButton label="Save" Icon={IconCheck} onClick={onSave} />
 				<IconButton label="Cancel" Icon={IconClose} onClick={onCancel} />
@@ -103,7 +104,7 @@
 		</div>
 	{:else}
 		<p
-			class="mb-2 mr-2 whitespace-pre-wrap border-t border-red-500/50 px-1 pt-1 text-sm opacity-85 print:opacity-95 print:border-red-900/50"
+			class="mb-2 mr-2 whitespace-pre-wrap border-t border-red-500/50 px-1 pt-1 text-sm opacity-85 print:border-red-900/50 print:opacity-95"
 		>
 			{marker.description || 'No point of interest description.'}
 		</p>
