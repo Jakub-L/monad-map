@@ -45,7 +45,7 @@
 </script>
 
 <div class="flex h-full max-h-full flex-col print:min-w-3xl print:min-w-3xl">
-	<Toolbar />
+	<Toolbar readOnly/>
 	{#if selectedMap}
 		<div
 			class="grid max-h-full grow grid-rows-2 gap-2 lg:grid-cols-3 lg:grid-rows-1 print:grid-cols-1 print:grid-rows-2 print:gap-0"
@@ -55,6 +55,7 @@
 				bind:zoom={selectedMap.zoom}
 				bind:center={selectedMap.center}
 				{addMarker}
+				readOnly
 				class="lg:col-span-2"
 			/>
 			<div class="flex max-h-full flex-col gap-2">
@@ -78,6 +79,7 @@
 					{:else}
 						{#each selectedMap.markers as marker, i (marker.id)}
 							<PointOfInterest
+							readOnly
 								{marker}
 								index={i}
 								bind:this={poiCards[marker.id]}

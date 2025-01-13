@@ -1,18 +1,20 @@
 <script lang="ts">
-	import type { Component } from 'svelte';
-	import type { PoI } from '$lib/types';
-
-	import { MAX_DESCRIPTION, MAX_TITLE } from '$lib/constants';
-
-	import IconButton from './base/icon-button.svelte';
-
+	// Components
+	import IconButton from '$lib/components/base/icon-button.svelte';
+	import Input from '$lib/components/base/input.svelte';
+	
 	// Icons
 	import IconCheck from '~icons/ion/checkmark-sharp';
 	import IconClose from '~icons/ion/close-sharp';
 	import IconEdit from '~icons/ion/edit';
 	import IconTrash from '~icons/ion/trash-bin-sharp';
-	import Input from './base/input.svelte';
-
+	
+	// Utils
+	import { MAX_DESCRIPTION, MAX_TITLE } from '$lib/constants';
+	
+	// Types
+	import type { PoI } from '$lib/types';
+	
 	// Props
 	interface Props {
 		marker: PoI;
@@ -77,7 +79,7 @@
 				<h3 class="font-nova">{marker.title || 'No point of interest title'}</h3>
 			</div>
 		{/if}
-		<div class={["mr-2 flex gap-1", readOnly && '!hidden']}>
+		<div class={['mr-2 flex gap-1', readOnly && '!hidden']}>
 			{#if isEditing}
 				<IconButton label="Save" Icon={IconCheck} onClick={onSave} />
 				<IconButton label="Cancel" Icon={IconClose} onClick={onCancel} />

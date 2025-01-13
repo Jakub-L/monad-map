@@ -1,6 +1,8 @@
 <script lang="ts">
+	// Types
 	import type { Snippet } from 'svelte';
 
+	// Props
 	interface Props {
 		children: Snippet;
 		title?: string;
@@ -9,7 +11,6 @@
 	}
 
 	const { children, title, class: classOverrides, onClick }: Props = $props();
-	$inspect(children);
 </script>
 
 <button

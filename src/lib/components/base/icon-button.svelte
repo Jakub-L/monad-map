@@ -1,6 +1,8 @@
 <script lang="ts">
+	// Types
 	import type { Component } from 'svelte';
 
+	// Props
 	interface Props {
 		label: string;
 		Icon: Component;

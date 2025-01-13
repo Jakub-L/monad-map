@@ -1,39 +1,42 @@
 <script lang="ts">
 	import { nanoid } from 'nanoid';
 
+	// Components
+	import { DropdownMenu } from 'bits-ui';
+	import IconMenu from '~icons/ion/menu-sharp';
+	import Input from '$lib/components/base/input.svelte';
+	import Button from '$lib/components/base/button.svelte';
+	import LoadMapDialog from '$lib/components/dialogs/load-map.svelte';
+
+	// Types
 	import type { MonadMap } from '$lib/types';
+
+	// Utils
 	import { DEFAULT_CENTER, DEFAULT_ZOOM, MAX_MAP_NAME } from '$lib/constants';
 
-	import { selectedMapId, maps } from '$lib/state.svelte';
-
-	import LoadMapDialog from '$lib/components/dialogs/load-map.svelte';
-	import Button from '$lib/components/base/button.svelte';
-	import IconMenu from '~icons/ion/menu-sharp';
-	import { DropdownMenu } from 'bits-ui';
-	import Input from './base/input.svelte';
-
-	// PROPS
+	// Props
 	interface Props {
 		readOnly?: boolean;
 	}
-
 	const { readOnly }: Props = $props();
 
-	// STATE
+	// State
+	import { selectedMapId, maps } from '$lib/state.svelte';
 	const selectedId = $derived(selectedMapId.value);
 	const selectedMap = $derived(maps.value[selectedId]);
 	let loadDialogOpen = $state(false);
 
-	// UTILS
+	// Local utils
 	const saveAndActivate = (map: MonadMap) => {
 		maps.value = { ...maps.value, [map.id]: map };
 		selectedMapId.value = map.id;
 	};
 
-	// HANDLERS
+	// Handlers
 	const toggleLoadDialog = () => (loadDialogOpen = !loadDialogOpen);
 	const updateEditTime = () => (selectedMap.lastEdited = Date.now());
 
+	/** Creates a new blank map */
 	const createNewMap = () => {
 		saveAndActivate({
 			id: nanoid(),

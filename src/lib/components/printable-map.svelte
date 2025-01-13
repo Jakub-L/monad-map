@@ -1,7 +1,11 @@
 <script lang="ts">
-	import type { PoI } from '$lib/types';
+	// Components
 	import { MapEvents, MapLibre, Marker } from 'svelte-maplibre';
 
+	// Types
+	import type { PoI } from '$lib/types';
+
+	// Props
 	interface Props {
 		zoom?: number;
 		center?: [number, number];

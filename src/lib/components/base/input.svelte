@@ -1,4 +1,5 @@
 <script lang="ts">
+	// Props
 	interface Props {
 		value: string;
 		classOverrides?: string;
