@@ -20,8 +20,8 @@
 		marker: PoI;
 		index: number;
 		readOnly?: boolean;
-		onUpdateEditTime: () => void;
-		onDeleteMarker: (id: string) => void;
+		onUpdateEditTime?: () => void;
+		onDeleteMarker?: (id: string) => void;
 	}
 
 	let { marker, index, readOnly, onUpdateEditTime, onDeleteMarker }: Props = $props();
@@ -47,11 +47,11 @@
 		marker.title = editTitle;
 		marker.description = editDescription;
 		isEditing = false;
-		onUpdateEditTime();
+		onUpdateEditTime?.();
 	};
 
 	const onDelete = () => {
-		onDeleteMarker(marker.id);
+		onDeleteMarker?.(marker.id);
 	};
 
 	const onKeyDown = (event: KeyboardEvent): void => {
