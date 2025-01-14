@@ -32,7 +32,7 @@
 
 	/** Creates a new blank map */
 	const createNewMap = () => {
-		onAddMap({
+		onAddMap?.({
 			id: nanoid(),
 			name: 'Unnamed map',
 			lastEdited: Date.now(),
@@ -44,7 +44,7 @@
 
 	/** Clones current map and activates it */
 	const cloneMap = () => {
-		onAddMap({ ...map, name: `${map.name} (copy)`, id: nanoid() });
+		onAddMap?.({ ...map, name: `${map.name} (copy)`, id: nanoid() });
 	};
 
 	/** Clears all markers from the map */
@@ -115,7 +115,10 @@
 	<div class="grow"></div>
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger
-			class="flex min-h-12 min-w-12 items-center justify-center rounded-full p-0.5 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:bg-red-700/60 md:min-h-8 md:min-w-8 2xl:hidden print:hidden"
+			class={[
+				'flex min-h-12 min-w-12 items-center justify-center rounded-full p-0.5 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:bg-red-700/60 md:min-h-8 md:min-w-8 2xl:hidden print:hidden',
+				readOnly && '!hidden'
+			]}
 			aria-label="Menu"
 		>
 			<IconMenu class="size-6 md:size-5" />
@@ -131,7 +134,7 @@
 			{@render dropdownMenuItem('Export', () => {}, 'xl:hidden')}
 			{@render dropdownMenuItem('Import', () => {}, 'xl:hidden')}
 			{@render dropdownMenuItem('Print', () => {}, 'xl:hidden')}
-			{@render dropdownMenuItem('Share', () => {}, 'xl:hidden')}
+			{@render dropdownMenuItem('Share', shareMap, 'xl:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 xl:hidden" />
 			{@render dropdownMenuItem('Clear', clearMap)}
 			{@render dropdownMenuItem('Delete')}
