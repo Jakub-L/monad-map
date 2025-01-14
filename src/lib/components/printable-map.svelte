@@ -12,7 +12,7 @@
 		class?: string;
 		markers: PoI[];
 		readOnly?: boolean;
-		addMarker: (event: any) => void;
+		addMarker?: (event: any) => void;
 	}
 
 	let {
@@ -29,11 +29,10 @@
 	style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
 	class={mapClasses}
 	standardControls={!readOnly}
-	standardControls
 	bind:zoom
 	bind:center
 >
-	<MapEvents onclick={(e) => !readOnly && addMarker(e)} />
+	<MapEvents onclick={(e) => !readOnly && addMarker?.(e)} />
 	{#each markers as marker, i (marker.id)}
 		<Marker
 			draggable={!readOnly}
