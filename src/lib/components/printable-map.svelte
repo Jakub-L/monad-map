@@ -19,7 +19,7 @@
 		zoom = $bindable(),
 		center = $bindable(),
 		class: mapClasses,
-		markers = [],
+		markers = $bindable([]),
 		readOnly,
 		addMarker
 	}: Props = $props();

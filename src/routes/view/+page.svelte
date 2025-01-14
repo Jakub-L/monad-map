@@ -4,10 +4,10 @@
 	import Toolbar from '$lib/components/toolbar.svelte';
 	import PointOfInterest from '$lib/components/point-of-interest.svelte';
 	import PoiListPlaceholder from '$lib/components/poi-list-placeholder.svelte';
-	
+
 	// Types
 	import type { PageData } from './+page';
-	
+
 	// Props
 	interface Props {
 		data: PageData;
@@ -26,9 +26,9 @@
 	>
 		<PrintableMap
 			class="lg:col-span-2"
-			zoom={map.zoom}
-			center={map.center}
-			markers={map.markers}
+			bind:zoom={map.zoom}
+			bind:center={map.center}
+			bind:markers={map.markers}
 			readOnly
 		/>
 		<div class="flex max-h-full flex-col gap-2">
@@ -38,7 +38,7 @@
 				class="flex h-full flex-col gap-2 overflow-y-auto px-2 lg:pl-0 print:overflow-y-visible"
 			>
 				{#if map.markers.length === 0}
-					<PoiListPlaceholder hideSubtitle/>
+					<PoiListPlaceholder hideSubtitle />
 				{:else}
 					{#each map.markers as marker, i (marker.id)}
 						<PointOfInterest {marker} index={i} readOnly />
