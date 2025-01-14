@@ -27,9 +27,9 @@
 		selectedMap.markers.push({
 			id: nanoid(),
 			lngLat,
-			title: `Lorem ipsum dolor sit amet, consectetur cras amet.`,
+			title: `Lorem ipsum dolor sit amet, consectetur cras amet. Lorem ipsum dolor sit amet, consectetur cras amet`,
 			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo vestibulum, pulvinar urna non, ornare nisi. Pellentesque dignissim tincidunt leo a pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer lorem nulla, mollis laoreet bibendum id, gravida in risus. Mauris facilisis mi volutpat ipsum dapibus, et molestie sapien finibus augue.'
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo vestibulum, pulvinar urna non, ornare nisi. Pellentesque dignissim tincidunt leo a pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer lorem nulla, mollis laoreet bibendum id, gravida in risus. Mauris facilisis mi volutpat ipsum dapibus, et molestie sapien finibus augue. Id, gravida in risus. Mauris facilisis mi volutpat ipsum dapibus, et molestie sapien finibus augue.'
 		} as PoI);
 		updateEditTime();
 	};
@@ -42,10 +42,15 @@
 	const updateEditTime = () => {
 		selectedMap.lastEdited = Date.now();
 	};
+
+	const addMapAndActivate = (map: MonadMap) => {
+		maps.value = { ...maps.value, [map.id]: map };
+		selectedMapId.value = map.id;
+	};
 </script>
 
-<div class="flex h-full max-h-full flex-col print:min-w-3xl print:min-w-3xl">
-	<Toolbar readOnly/>
+<div class="print:min-w-3xl print:min-w-3xl flex h-full max-h-full flex-col">
+	<Toolbar map={selectedMap} onAddMap={addMapAndActivate} />
 	{#if selectedMap}
 		<div
 			class="grid max-h-full grow grid-rows-2 gap-2 lg:grid-cols-3 lg:grid-rows-1 print:grid-cols-1 print:grid-rows-2 print:gap-0"
@@ -55,7 +60,6 @@
 				bind:zoom={selectedMap.zoom}
 				bind:center={selectedMap.center}
 				{addMarker}
-				readOnly
 				class="lg:col-span-2"
 			/>
 			<div class="flex max-h-full flex-col gap-2">
@@ -79,7 +83,6 @@
 					{:else}
 						{#each selectedMap.markers as marker, i (marker.id)}
 							<PointOfInterest
-							readOnly
 								{marker}
 								index={i}
 								bind:this={poiCards[marker.id]}
