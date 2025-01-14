@@ -5,8 +5,8 @@
 	// Components
 	import PrintableMap from '$lib/components/printable-map.svelte';
 	import PointOfInterest from '$lib/components/point-of-interest.svelte';
+	import PoiListPlaceholder from '$lib/components/poi-list-placeholder.svelte';
 	import Toolbar from '$lib/components/toolbar.svelte';
-	import IconMapPin from '~icons/ion/location-outline';
 
 	// Types
 	import type { MapMouseEvent } from 'maplibre-gl';
@@ -72,14 +72,7 @@
 					class="flex h-full flex-col gap-2 overflow-y-auto px-2 lg:pl-0 print:overflow-y-visible"
 				>
 					{#if selectedMap.markers.length === 0}
-						<div
-							id="marker-placeholder"
-							class="flex grow flex-col items-center justify-center !bg-red-950/40 p-8 opacity-90"
-						>
-							<IconMapPin class="mb-4 size-10 opacity-70" />
-							<span class="font-nova text-lg">No points of interest.</span>
-							<span class="text-sm">Click on the map to add a marker.</span>
-						</div>
+						<PoiListPlaceholder />
 					{:else}
 						{#each selectedMap.markers as marker, i (marker.id)}
 							<PointOfInterest
