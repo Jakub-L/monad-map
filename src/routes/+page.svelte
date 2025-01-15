@@ -14,6 +14,7 @@
 
 	// Utils
 	import { MAX_MARKERS } from '$lib/constants';
+	import { blankMap } from '$lib/utils';
 
 	// State
 	import { selectedMapId, maps } from '$lib/state.svelte';
@@ -47,10 +48,17 @@
 		maps.value = { ...maps.value, [map.id]: map };
 		selectedMapId.value = map.id;
 	};
+
+	const deleteMap = (map: MonadMap) => {
+		const newMaps = Object.values(maps.value).filter((m) => m.id !== map.id);
+		if (newMaps.length === 0) newMaps.unshift(blankMap());
+		maps.value = newMaps.reduce((acc, m) => ({ ...acc, [m.id]: m }), {});
+		selectedMapId.value = newMaps[0].id;
+	};
 </script>
 
 <div class="print:min-w-3xl print:min-w-3xl flex h-full max-h-full flex-col">
-	<Toolbar map={selectedMap} onAddMap={addMapAndActivate} />
+	<Toolbar map={selectedMap} onAddMap={addMapAndActivate} onDeleteMap={deleteMap} />
 	{#if selectedMap}
 		<div
 			class="grid max-h-full grow grid-rows-2 gap-2 lg:grid-cols-3 lg:grid-rows-1 print:grid-cols-1 print:grid-rows-2 print:gap-0"

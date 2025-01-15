@@ -7,39 +7,40 @@
 	import Input from '$lib/components/base/input.svelte';
 	import Button from '$lib/components/base/button.svelte';
 	import LoadMapDialog from '$lib/components/dialogs/load-map.svelte';
+	import ConfirmDialog from '$lib/components/dialogs/confirm.svelte';
 
 	// Types
 	import type { MonadMap } from '$lib/types';
 
 	// Utils
 	import { DEFAULT_CENTER, DEFAULT_ZOOM, MAX_MAP_NAME } from '$lib/constants';
+	import { blankMap } from '$lib/utils';
 
 	// Props
 	interface Props {
 		map: MonadMap;
 		readOnly?: boolean;
 		onAddMap?: (map: MonadMap) => void;
+		onDeleteMap?: (map: MonadMap) => void;
 	}
-	const { map = $bindable(), readOnly, onAddMap }: Props = $props();
+
+	const { map = $bindable(), readOnly, onAddMap, onDeleteMap }: Props = $props();
 
 	// State
 	import { goto } from '$app/navigation';
 	let loadDialogOpen = $state(false);
+	let confirmClearDialogOpen = $state(false);
+	let confirmDeleteDialogOpen = $state(false);
 
 	// Handlers
 	const toggleLoadDialog = () => (loadDialogOpen = !loadDialogOpen);
+	const toggleConfirmClearDialog = () => (confirmClearDialogOpen = !confirmClearDialogOpen);
+	const toggleConfirmDeleteDialog = () => (confirmDeleteDialogOpen = !confirmDeleteDialogOpen);
 	const updateEditTime = () => (map.lastEdited = Date.now());
 
 	/** Creates a new blank map */
 	const createNewMap = () => {
-		onAddMap?.({
-			id: nanoid(),
-			name: 'Unnamed map',
-			lastEdited: Date.now(),
-			center: DEFAULT_CENTER,
-			zoom: DEFAULT_ZOOM,
-			markers: []
-		});
+		onAddMap?.(blankMap());
 	};
 
 	/** Clones current map and activates it */
@@ -109,8 +110,8 @@
 		class={['hidden h-6 border-l border-red-500/50 2xl:block print:hidden', readOnly && '!hidden']}
 	></div>
 	<div class={['hidden gap-2 2xl:flex', readOnly && '!hidden']}>
-		<Button onClick={clearMap}>Clear</Button>
-		<Button onClick={() => {}}>Delete</Button>
+		<Button onClick={toggleConfirmClearDialog}>Clear</Button>
+		<Button onClick={toggleConfirmDeleteDialog}>Delete</Button>
 	</div>
 	<div class="grow"></div>
 	<DropdownMenu.Root>
@@ -136,9 +137,21 @@
 			{@render dropdownMenuItem('Print', () => {}, 'xl:hidden')}
 			{@render dropdownMenuItem('Share', shareMap, 'xl:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 xl:hidden" />
-			{@render dropdownMenuItem('Clear', clearMap)}
-			{@render dropdownMenuItem('Delete')}
+			{@render dropdownMenuItem('Clear', toggleConfirmClearDialog)}
+			{@render dropdownMenuItem('Delete', toggleConfirmDeleteDialog)}
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 	<LoadMapDialog bind:open={loadDialogOpen} />
+	<ConfirmDialog
+		bind:open={confirmClearDialogOpen}
+		title="Clear all markers?"
+		actionText="Clear"
+		onAction={clearMap}
+	/>
+	<ConfirmDialog
+		bind:open={confirmDeleteDialogOpen}
+		title="Delete this map?"
+		actionText="Delete"
+		onAction={() => onDeleteMap?.(map)}
+	/>
 </div>
