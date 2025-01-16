@@ -51,6 +51,21 @@
 	/** Clears all markers from the map */
 	const clearMap = () => (map.markers = []);
 
+	/** Exports the current map as a JSON file */
+	const exportMap = () => {
+		const link = document.createElement('a');
+		const file = new Blob([JSON.stringify(map)], { type: 'application/json' });
+
+		const saveFilename = (map.name || `untitled map ${map.id}`)
+			.toLowerCase()
+			.replace(/[^a-z0-9\s]/g, '')
+			.trim()
+			.replace(/\s+/g, '-');
+		link.href = URL.createObjectURL(file);
+		link.download = `${saveFilename}.json`;
+		link.click();
+	};
+
 	const shareMap = () => {
 		const data = btoa(JSON.stringify(map));
 		goto(`/view?map=${data}`);
@@ -101,7 +116,7 @@
 		class={['hidden h-6 border-l border-red-500/50 xl:block print:hidden', readOnly && '!hidden']}
 	></div>
 	<div class={['hidden gap-2 xl:flex', readOnly && '!hidden']}>
-		<Button onClick={() => {}}>Export</Button>
+		<Button onClick={exportMap}>Export</Button>
 		<Button onClick={() => {}}>Import</Button>
 		<Button onClick={() => {}}>Print</Button>
 		<Button onClick={shareMap}>Share</Button>
@@ -132,7 +147,7 @@
 			{@render dropdownMenuItem('Load', toggleLoadDialog, 'lg:hidden')}
 			{@render dropdownMenuItem('Clone', cloneMap, 'lg:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 lg:hidden" />
-			{@render dropdownMenuItem('Export', () => {}, 'xl:hidden')}
+			{@render dropdownMenuItem('Export', exportMap, 'xl:hidden')}
 			{@render dropdownMenuItem('Import', () => {}, 'xl:hidden')}
 			{@render dropdownMenuItem('Print', () => {}, 'xl:hidden')}
 			{@render dropdownMenuItem('Share', shareMap, 'xl:hidden')}
@@ -144,7 +159,7 @@
 	<LoadMapDialog bind:open={loadDialogOpen} />
 	<ConfirmDialog
 		bind:open={confirmClearDialogOpen}
-		title="Clear all markers?"
+		title="Remove all points of interest?"
 		actionText="Clear"
 		onAction={clearMap}
 	/>
