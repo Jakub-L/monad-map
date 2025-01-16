@@ -92,7 +92,7 @@
 		onInput={updateEditTime}
 		title="Map name"
 		maxLength={MAX_MAP_NAME}
-		placeholder="Map name"
+		placeholder="Enter map name..."
 	/>
 {/snippet}
 

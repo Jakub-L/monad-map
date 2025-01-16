@@ -27,7 +27,7 @@
 	<textarea
 		name={title}
 		class={[
-			'grow rounded-r-[1.25rem] border border-red-500 bg-red-950/40 p-1 text-left placeholder:text-red-50/90 hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80 print:hidden',
+			'grow rounded-r-[1.25rem] border border-red-500 bg-red-950/40 p-1 text-left placeholder:text-red-50/70 hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80 print:hidden',
 			classOverrides
 		]}
 		rows={4}
@@ -39,7 +39,7 @@
 	></textarea>{:else}
 	<input
 		class={[
-			'h-9 grow rounded-r-[1.25rem] border border-red-500 bg-red-950/40 p-1 placeholder:text-red-50/90 hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80 print:hidden',
+			'h-9 grow rounded-r-[1.25rem] border border-red-500 bg-red-950/40 p-1 placeholder:text-red-50/70 hover:bg-red-700/30 focus:outline focus:outline-4 focus:-outline-offset-1 focus:outline-red-400 focus-visible:bg-red-950/80 print:hidden',
 			classOverrides
 		]}
 		name={title}

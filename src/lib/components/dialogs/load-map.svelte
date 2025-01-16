@@ -36,7 +36,7 @@
 						class="border border-red-500 bg-red-950/30 p-2 text-left hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-[98%] active:bg-red-700/60"
 						onclick={() => loadMap(id)}
 					>
-						<h3 class="font-nova">{name}</h3>
+						<h3 class="font-nova">{name || "Untitled map"}</h3>
 						<div class="flex justify-between gap-20 text-xs">
 							<p>{markers.length} point{markers.length === 1 ? '' : 's'} of interest</p>
 							<p>Last edited: {new Date(lastEdited).toLocaleString()}</p>
