@@ -54,7 +54,7 @@
 	/** Exports the current map as a JSON file */
 	const exportMap = () => {
 		const link = document.createElement('a');
-		const file = new Blob([JSON.stringify(map)], { type: 'application/json' });
+		const file = new Blob([JSON.stringify(map, null, 4)], { type: 'application/json' });
 
 		const saveFilename = (map.name || `untitled map ${map.id}`)
 			.toLowerCase()
