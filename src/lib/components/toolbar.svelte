@@ -118,7 +118,7 @@
 	></div>
 	<div class={['hidden gap-2 xl:flex', readOnly && '!hidden']}>
 		<Button onClick={exportMap}>Export</Button>
-		<MapImporter></MapImporter>
+		<MapImporter />
 		<Button onClick={shareMap}>Share</Button>
 	</div>
 	<div
@@ -148,7 +148,9 @@
 			{@render dropdownMenuItem('Clone', cloneMap, 'lg:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 lg:hidden" />
 			{@render dropdownMenuItem('Export', exportMap, 'xl:hidden')}
-			{@render dropdownMenuItem('Import', () => {}, 'xl:hidden')}
+			<MapImporter
+				class="-mb-2 flex h-10 items-center rounded-full border-0 bg-transparent px-4 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60 xl:hidden"
+			/>
 			{@render dropdownMenuItem('Print', () => {}, 'xl:hidden')}
 			{@render dropdownMenuItem('Share', shareMap, 'xl:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 xl:hidden" />

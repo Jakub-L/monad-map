@@ -7,11 +7,14 @@
 	import IconClose from '~icons/ion/close-sharp';
 
 	// Types
-	import type { Snippet } from 'svelte';
 	import type { MonadMap } from '$lib/types';
 
 	// Props
-	interface Props {}
+	interface Props {
+		class?: string;
+	}
+
+	const { class: classOverrides }: Props = $props();
 
 	// State
 	import { maps, selectedMapId } from '$lib/state.svelte';
@@ -72,7 +75,7 @@
 	};
 </script>
 
-<Button onClick={() => fileSelector.click()}>Import</Button>
+<Button onClick={() => fileSelector.click()} class={classOverrides}>Import</Button>
 <div class="sr-only">
 	<label for="map-import">Import a map</label>
 	<input
