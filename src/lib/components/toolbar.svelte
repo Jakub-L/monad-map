@@ -8,6 +8,7 @@
 	import Button from '$lib/components/base/button.svelte';
 	import LoadMapDialog from '$lib/components/dialogs/load-map.svelte';
 	import ConfirmDialog from '$lib/components/dialogs/confirm.svelte';
+	import MapImporter from './map-importer.svelte';
 
 	// Types
 	import type { MonadMap } from '$lib/types';
@@ -117,8 +118,7 @@
 	></div>
 	<div class={['hidden gap-2 xl:flex', readOnly && '!hidden']}>
 		<Button onClick={exportMap}>Export</Button>
-		<Button onClick={() => {}}>Import</Button>
-		<Button onClick={() => {}}>Print</Button>
+		<MapImporter></MapImporter>
 		<Button onClick={shareMap}>Share</Button>
 	</div>
 	<div
