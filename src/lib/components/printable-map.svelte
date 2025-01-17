@@ -37,7 +37,7 @@
 		<Marker
 			draggable={!readOnly}
 			bind:lngLat={marker.lngLat}
-			class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl hover:bg-green-300 focus:outline-2 focus:outline-black"
+			class="grid h-8 w-8 place-items-center rounded-full border border-red-500  bg-red-950 font-nova hover:bg-red-700 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-800"
 		>
 			<span>{i + 1}</span>
 		</Marker>
