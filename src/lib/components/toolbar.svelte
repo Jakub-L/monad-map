@@ -146,7 +146,7 @@
 			<IconMenu class="size-6 md:size-5" />
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content
-			class="z-20 -ml-2 mt-2 flex w-full flex-col gap-2 rounded-b-[1.25rem] border-b border-red-500 bg-slate-950 p-4 md:ml-2 md:w-1/2 md:border-x lg:w-1/4 2xl:hidden"
+			class="z-20 -ml-2 mt-2 flex w-full flex-col gap-2 rounded-b-[1.25rem] border-b border-red-500 bg-slate-950 p-4 md:ml-2 md:w-1/2 md:border-x lg:w-1/4 2xl:hidden print:hidden"
 		>
 			{@render mapNameInput('sm:hidden')}
 			{@render dropdownMenuItem('New', createNewMap, 'lg:hidden')}
