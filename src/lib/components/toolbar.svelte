@@ -14,7 +14,7 @@
 	import type { MonadMap } from '$lib/types';
 
 	// Utils
-	import { DEFAULT_CENTER, DEFAULT_ZOOM, MAX_MAP_NAME } from '$lib/constants';
+	import { MAX_MAP_NAME } from '$lib/constants';
 	import { blankMap } from '$lib/utils';
 
 	// Props
@@ -65,6 +65,11 @@
 		link.href = URL.createObjectURL(file);
 		link.download = `${saveFilename}.json`;
 		link.click();
+	};
+
+	/** Prints the current map */
+	const printMap = () => {
+		window.print();
 	};
 
 	const shareMap = () => {
@@ -118,6 +123,7 @@
 	></div>
 	<div class={['hidden gap-2 xl:flex', readOnly && '!hidden']}>
 		<Button onClick={exportMap}>Export</Button>
+		<Button onClick={printMap}>Print</Button>
 		<MapImporter />
 		<Button onClick={shareMap}>Share</Button>
 	</div>
@@ -151,7 +157,7 @@
 			<MapImporter
 				class="-mb-2 flex h-10 items-center rounded-full border-0 bg-transparent px-4 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60 xl:hidden"
 			/>
-			{@render dropdownMenuItem('Print', () => {}, 'xl:hidden')}
+			{@render dropdownMenuItem('Print', printMap, 'xl:hidden')}
 			{@render dropdownMenuItem('Share', shareMap, 'xl:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 xl:hidden" />
 			{@render dropdownMenuItem('Clear', toggleConfirmClearDialog)}
