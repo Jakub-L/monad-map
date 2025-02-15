@@ -26,7 +26,7 @@
 </script>
 
 <MapLibre
-	style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+	style="/map-styles/monad.json"
 	class={mapClasses}
 	standardControls={!readOnly}
 	bind:zoom
@@ -37,7 +37,7 @@
 		<Marker
 			draggable={!readOnly}
 			bind:lngLat={marker.lngLat}
-			class="grid h-8 w-8 place-items-center rounded-full border border-red-500  bg-red-950 font-nova hover:bg-red-700 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-800 print:bg-white print:border-red-900"
+			class="grid h-8 w-8 place-items-center rounded-full border-2 border-red-500  bg-slate-950 font-nova hover:bg-slate-700 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-800 print:bg-white print:border-red-900"
 		>
 			<span>{i + 1}</span>
 		</Marker>
