@@ -23,21 +23,26 @@
 		readOnly,
 		addMarker
 	}: Props = $props();
+
+	// State
+	import { mapRef } from '$lib/state.svelte';
 </script>
 
 <MapLibre
 	style="/map-styles/monad.json"
 	class={mapClasses}
 	standardControls={!readOnly}
+	preserveDrawingBuffer
 	bind:zoom
 	bind:center
+	bind:map={mapRef.val}
 >
 	<MapEvents onclick={(e) => !readOnly && addMarker?.(e)} />
 	{#each markers as marker, i (marker.id)}
 		<Marker
 			draggable={!readOnly}
 			bind:lngLat={marker.lngLat}
-			class="grid h-8 w-8 place-items-center rounded-full border-2 border-red-500  bg-slate-950 font-nova hover:bg-slate-700 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-800 print:bg-white print:border-red-900"
+			class="grid h-8 w-8 place-items-center rounded-full border-2 border-red-500  bg-slate-950 font-nova hover:bg-slate-700 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-800 print:border-red-900 print:bg-white"
 		>
 			<span>{i + 1}</span>
 		</Marker>

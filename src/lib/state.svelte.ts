@@ -39,3 +39,4 @@ export const maps = localStore<Record<string, MonadMap>>('monad/maps', {
 		center: [-122.34062, 47.60556]
 	}
 });
+export const mapRef: { val: any } = $state({ val: null });

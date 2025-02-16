@@ -29,6 +29,7 @@
 
 	// State
 	import { goto } from '$app/navigation';
+	import { mapRef } from '$lib/state.svelte';
 	let loadDialogOpen = $state(false);
 	let confirmClearDialogOpen = $state(false);
 	let confirmDeleteDialogOpen = $state(false);
@@ -73,8 +74,14 @@
 	};
 
 	const shareMap = () => {
-		const data = btoa(JSON.stringify(map));
-		goto(`/view?map=${data}`);
+		const map = mapRef.val
+			.getCanvas()
+			.toDataURL('image/png')
+			.replace('image/png', 'image/octet-stream');
+		const link = document.createElement('a');
+		link.href = map;
+		link.download = 'map.png';
+		link.click();
 	};
 </script>
 
