@@ -77,26 +77,27 @@
 		const mapRefVal = mapRef.val;
 		if (!mapRefVal) return;
 
-		const bounds: LngLatBoundsLike = map.markers.reduce((acc, {lngLat}) => [
-			Math.min(acc[0], lngLat.lng),
-			Math.min(acc[1], lngLat.lat),
-			Math.max(acc[2], lngLat.lng),
-			Math.max(acc[3], lngLat.lat)
-		], [Infinity, Infinity, -Infinity, -Infinity]);
+		const bounds: LngLatBoundsLike = map.markers.reduce(
+			(acc, { lngLat }) => [
+				Math.min(acc[0], lngLat.lng),
+				Math.min(acc[1], lngLat.lat),
+				Math.max(acc[2], lngLat.lng),
+				Math.max(acc[3], lngLat.lat)
+			],
+			[Infinity, Infinity, -Infinity, -Infinity]
+		);
 
-		mapRefVal.fitBounds(bounds, {padding: 50});
-
+		mapRefVal.fitBounds(bounds, { padding: 50 });
 		mapRefVal.setPixelRatio(4);
-		const canvas = mapRefVal.getCanvas();
+		console.log(mapRefVal.getCanvas());
 
 		// Ensure the map is fully rendered
 		await new Promise((resolve) => setTimeout(resolve, 100));
 
 		const link = document.createElement('a');
-		link.href = canvas.toDataURL('image/png');
+		link.href = mapRefVal.getCanvas().toDataURL('image/png');
 		link.download = `map.png`;
 		link.click();
-		mapRefVal.setPixelRatio(1);
 	};
 </script>
 
