@@ -28,8 +28,8 @@
 	const { map = $bindable(), readOnly, onAddMap, onDeleteMap }: Props = $props();
 
 	// State
-	import { goto } from '$app/navigation';
 	import { mapRef } from '$lib/state.svelte';
+	import type { LngLatBoundsLike } from 'svelte-maplibre';
 	let loadDialogOpen = $state(false);
 	let confirmClearDialogOpen = $state(false);
 	let confirmDeleteDialogOpen = $state(false);
@@ -73,15 +73,30 @@
 		window.print();
 	};
 
-	const shareMap = () => {
-		const map = mapRef.val
-			.getCanvas()
-			.toDataURL('image/png')
-			.replace('image/png', 'image/octet-stream');
+	const shareMap = async () => {
+		const mapRefVal = mapRef.val;
+		if (!mapRefVal) return;
+
+		const bounds: LngLatBoundsLike = map.markers.reduce((acc, {lngLat}) => [
+			Math.min(acc[0], lngLat.lng),
+			Math.min(acc[1], lngLat.lat),
+			Math.max(acc[2], lngLat.lng),
+			Math.max(acc[3], lngLat.lat)
+		], [Infinity, Infinity, -Infinity, -Infinity]);
+
+		mapRefVal.fitBounds(bounds, {padding: 50});
+
+		mapRefVal.setPixelRatio(4);
+		const canvas = mapRefVal.getCanvas();
+
+		// Ensure the map is fully rendered
+		await new Promise((resolve) => setTimeout(resolve, 100));
+
 		const link = document.createElement('a');
-		link.href = map;
-		link.download = 'map.png';
+		link.href = canvas.toDataURL('image/png');
+		link.download = `map.png`;
 		link.click();
+		mapRefVal.setPixelRatio(1);
 	};
 </script>
 

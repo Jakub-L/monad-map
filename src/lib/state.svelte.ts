@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 
-import type { MonadMap, PoI } from '$lib/types';
+import type { MonadMap } from '$lib/types';
+import type { Map } from 'svelte-maplibre';
 
 class LocalStore<T> {
 	public value: T = $state<T>() as T;
@@ -39,4 +40,4 @@ export const maps = localStore<Record<string, MonadMap>>('monad/maps', {
 		center: [-122.34062, 47.60556]
 	}
 });
-export const mapRef: { val: any } = $state({ val: null });
+export const mapRef: { val: Map | null } = $state({ val: null });
