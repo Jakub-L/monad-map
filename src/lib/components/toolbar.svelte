@@ -91,43 +91,64 @@
 		mapRefVal.setPixelRatio(4);
 
 		const canvas = mapRefVal.getCanvas();
-		mapRefVal.addSource('circleData', {
+
+		mapRefVal.addSource('markers', {
 			type: 'geojson',
 			data: {
 				type: 'FeatureCollection',
 				features: [
-					...(map.markers.map(({ lngLat }) => ({
-						type: 'Feature',
-						geometry: {
-							type: 'Point',
-							coordinates: [lngLat.lng, lngLat.lat]
-						}
-					})) as any)
+					...map.markers.map(
+						({ lngLat }, i) =>
+							({
+								type: 'Feature',
+								geometry: {
+									type: 'Point',
+									coordinates: [lngLat.lng, lngLat.lat]
+								},
+								properties: {
+									index: i + 1
+								}
+							}) as any
+					)
 				]
 			}
 		});
 
 		mapRefVal.addLayer({
-			id: 'data',
+			id: 'markers-circles',
 			type: 'circle',
-			source: 'circleData',
+			source: 'markers',
 			paint: {
-				'circle-color': '#00b7bf',
-				'circle-radius': 8,
-				'circle-stroke-width': 1,
-				'circle-stroke-color': '#333'
+				'circle-radius': 16,
+				'circle-color': 'rgb(2, 6, 23)',
+				'circle-stroke-width': 2,
+				'circle-stroke-color': 'rgb(239, 68, 68)'
 			}
 		});
 
+		mapRefVal.addLayer({
+			id: 'markers-label',
+			type: 'symbol',
+			source: 'markers',
+			layout: {
+				'text-field': '{index}',
+				'text-font': ['Arial Unicode MS Bold'],
+				'text-size': 12,
+				'text-justify': 'center'
+			},
+			paint: { 'text-color': 'rgb(229, 231, 235)' }
+		});
+
 		// Ensure the map is fully rendered
-		await new Promise((resolve) => setTimeout(resolve, 100));
+		await new Promise((resolve) => setTimeout(resolve, 500));
 
 		const link = document.createElement('a');
 		link.href = canvas.toDataURL('image/png');
 		link.download = `map.png`;
 		link.click();
-		mapRefVal.removeLayer('data');
-		mapRefVal.removeSource('circleData');
+		mapRefVal.removeLayer('markers-labels');
+		mapRefVal.removeLayer('markers-circles');
+		mapRefVal.removeSource('markers');
 	};
 </script>
 
