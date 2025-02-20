@@ -89,15 +89,45 @@
 
 		mapRefVal.fitBounds(bounds, { padding: 50 });
 		mapRefVal.setPixelRatio(4);
-		console.log(mapRefVal.getCanvas());
+
+		const canvas = mapRefVal.getCanvas();
+		mapRefVal.addSource('circleData', {
+			type: 'geojson',
+			data: {
+				type: 'FeatureCollection',
+				features: [
+					...(map.markers.map(({ lngLat }) => ({
+						type: 'Feature',
+						geometry: {
+							type: 'Point',
+							coordinates: [lngLat.lng, lngLat.lat]
+						}
+					})) as any)
+				]
+			}
+		});
+
+		mapRefVal.addLayer({
+			id: 'data',
+			type: 'circle',
+			source: 'circleData',
+			paint: {
+				'circle-color': '#00b7bf',
+				'circle-radius': 8,
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#333'
+			}
+		});
 
 		// Ensure the map is fully rendered
 		await new Promise((resolve) => setTimeout(resolve, 100));
 
 		const link = document.createElement('a');
-		link.href = mapRefVal.getCanvas().toDataURL('image/png');
+		link.href = canvas.toDataURL('image/png');
 		link.download = `map.png`;
 		link.click();
+		mapRefVal.removeLayer('data');
+		mapRefVal.removeSource('circleData');
 	};
 </script>
 
