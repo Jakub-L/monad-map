@@ -120,27 +120,27 @@
 			source: 'markers',
 			paint: {
 				'circle-radius': 16,
-				'circle-color': 'rgb(2, 6, 23)',
+				'circle-color': 'rgba(2, 6, 23)',
 				'circle-stroke-width': 2,
 				'circle-stroke-color': 'rgb(239, 68, 68)'
 			}
 		});
 
 		mapRefVal.addLayer({
-			id: 'markers-label',
+			id: 'markers-labels',
 			type: 'symbol',
 			source: 'markers',
 			layout: {
 				'text-field': '{index}',
-				'text-font': ['Arial Unicode MS Bold'],
+				'text-font': ['nova-square'],
 				'text-size': 12,
 				'text-justify': 'center'
 			},
-			paint: { 'text-color': 'rgb(229, 231, 235)' }
+			paint: { 'text-color': 'white' }
 		});
 
 		// Ensure the map is fully rendered
-		await new Promise((resolve) => setTimeout(resolve, 500));
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 
 		const link = document.createElement('a');
 		link.href = canvas.toDataURL('image/png');
