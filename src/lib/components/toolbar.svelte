@@ -15,7 +15,14 @@
 
 	// Utils
 	import { MAX_MAP_NAME } from '$lib/constants';
-	import { blankMap } from '$lib/utils';
+	import {
+		addMarkerSource,
+		blankMap,
+		clearMarkers,
+		drawMarkers,
+		fitMapToMarkers,
+		normalizeFilename
+	} from '$lib/utils';
 
 	// Props
 	interface Props {
@@ -58,11 +65,7 @@
 		const link = document.createElement('a');
 		const file = new Blob([JSON.stringify(map, null, 4)], { type: 'application/json' });
 
-		const saveFilename = (map.name || `untitled map ${map.id}`)
-			.toLowerCase()
-			.replace(/[^a-z0-9\s]/g, '')
-			.trim()
-			.replace(/\s+/g, '-');
+		const saveFilename = normalizeFilename(map.name, `untitled map ${map.id}`);
 		link.href = URL.createObjectURL(file);
 		link.download = `${saveFilename}.json`;
 		link.click();
@@ -77,78 +80,19 @@
 		const mapRefVal = mapRef.val;
 		if (!mapRefVal) return;
 
-		const bounds: LngLatBoundsLike = map.markers.reduce(
-			(acc, { lngLat }) => [
-				Math.min(acc[0], lngLat.lng),
-				Math.min(acc[1], lngLat.lat),
-				Math.max(acc[2], lngLat.lng),
-				Math.max(acc[3], lngLat.lat)
-			],
-			[Infinity, Infinity, -Infinity, -Infinity]
-		);
-
-		mapRefVal.fitBounds(bounds, { padding: 50 });
-		mapRefVal.setPixelRatio(4);
-
-		const canvas = mapRefVal.getCanvas();
-
-		mapRefVal.addSource('markers', {
-			type: 'geojson',
-			data: {
-				type: 'FeatureCollection',
-				features: [
-					...map.markers.map(
-						({ lngLat }, i) =>
-							({
-								type: 'Feature',
-								geometry: {
-									type: 'Point',
-									coordinates: [lngLat.lng, lngLat.lat]
-								},
-								properties: {
-									index: i + 1
-								}
-							}) as any
-					)
-				]
-			}
-		});
-
-		mapRefVal.addLayer({
-			id: 'markers-circles',
-			type: 'circle',
-			source: 'markers',
-			paint: {
-				'circle-radius': 16,
-				'circle-color': 'rgba(2, 6, 23)',
-				'circle-stroke-width': 2,
-				'circle-stroke-color': 'rgb(239, 68, 68)'
-			}
-		});
-
-		mapRefVal.addLayer({
-			id: 'markers-labels',
-			type: 'symbol',
-			source: 'markers',
-			layout: {
-				'text-field': '{index}',
-				'text-font': ['nova-square'],
-				'text-size': 12,
-				'text-justify': 'center'
-			},
-			paint: { 'text-color': 'white' }
-		});
+		fitMapToMarkers(mapRefVal, map.markers);
+		addMarkerSource(mapRefVal, map.markers);
+		drawMarkers(mapRefVal);
 
 		// Ensure the map is fully rendered
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 
 		const link = document.createElement('a');
-		link.href = canvas.toDataURL('image/png');
-		link.download = `map.png`;
+		link.href = mapRefVal.getCanvas().toDataURL('image/png');
+		link.download = normalizeFilename(`${map.name}-map`, `${map.id}-map`);
 		link.click();
-		mapRefVal.removeLayer('markers-labels');
-		mapRefVal.removeLayer('markers-circles');
-		mapRefVal.removeSource('markers');
+
+		clearMarkers(mapRefVal);
 	};
 </script>
 
