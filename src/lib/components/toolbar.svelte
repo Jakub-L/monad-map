@@ -61,7 +61,7 @@
 	const clearMap = () => (map.markers = []);
 
 	/** Exports the current map as a JSON file */
-	const exportMap = () => {
+	const exportData = () => {
 		const link = document.createElement('a');
 		const file = new Blob([JSON.stringify(map, null, 4)], { type: 'application/json' });
 
@@ -72,11 +72,11 @@
 	};
 
 	/** Prints the current map */
-	const printMap = () => {
+	const savePoIs = () => {
 		window.print();
 	};
 
-	const shareMap = async () => {
+	const saveMap = async () => {
 		const mapRefVal = mapRef.val;
 		if (!mapRefVal) return;
 
@@ -140,11 +140,17 @@
 		class={['hidden h-6 border-l border-red-500/50 xl:block print:hidden', readOnly && '!hidden']}
 	></div>
 	<div class={['hidden gap-2 xl:flex', readOnly && '!hidden']}>
-		<Button onClick={exportMap}>Export</Button>
-		<Button onClick={printMap}>Print</Button>
-		<MapImporter />
-		<Button onClick={shareMap}>Share</Button>
+		<Button onClick={saveMap}>Save Map</Button>
+		<Button onClick={savePoIs}>Save points of interest</Button>
 	</div>
+	<div
+		class={['hidden h-6 border-l border-red-500/50 2xl:block print:hidden', readOnly && '!hidden']}
+	></div>
+	<div class={['hidden gap-2 2xl:flex', readOnly && '!hidden']}>
+		<Button onClick={exportData}>Export</Button>
+		<MapImporter />
+	</div>
+
 	<div
 		class={['hidden h-6 border-l border-red-500/50 2xl:block print:hidden', readOnly && '!hidden']}
 	></div>
@@ -171,13 +177,14 @@
 			{@render dropdownMenuItem('Load', toggleLoadDialog, 'lg:hidden')}
 			{@render dropdownMenuItem('Clone', cloneMap, 'lg:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 lg:hidden" />
-			{@render dropdownMenuItem('Export', exportMap, 'xl:hidden')}
+			{@render dropdownMenuItem('Export', exportData, '2xl:hidden')}
 			<MapImporter
-				class="-mb-2 flex h-10 items-center rounded-full border-0 bg-transparent px-4 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60 xl:hidden"
+				class="-mb-2 flex h-10 items-center rounded-full border-0 bg-transparent px-4 py-1 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60 2xl:hidden"
 			/>
-			{@render dropdownMenuItem('Print', printMap, 'xl:hidden')}
-			{@render dropdownMenuItem('Share', shareMap, 'xl:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 xl:hidden" />
+			{@render dropdownMenuItem('Save points of interest', savePoIs, 'xl:hidden')}
+			{@render dropdownMenuItem('Save Map', saveMap, 'xl:hidden')}
+			<DropdownMenu.Separator class="border-t border-red-500/50 2xl:hidden" />
 			{@render dropdownMenuItem('Clear', toggleConfirmClearDialog)}
 			{@render dropdownMenuItem('Delete', toggleConfirmDeleteDialog)}
 		</DropdownMenu.Content>

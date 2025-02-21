@@ -68,7 +68,7 @@
 				bind:zoom={selectedMap.zoom}
 				bind:center={selectedMap.center}
 				{addMarker}
-				class="lg:col-span-2"
+				class="lg:col-span-2 print:hidden"
 			/>
 			<div class="flex max-h-full flex-col gap-2">
 				<div class="flex items-center justify-between px-2 font-nova lg:pl-0">
