@@ -36,10 +36,7 @@
 	bind:zoom
 	bind:center
 	bind:map={mapRef.val}
-	onload={() => {
-		mapRef.val?.setGlyphs('map-glyphs/{fontstack}/{range}.pbf');
-		mapRef.val?.setPixelRatio(4);
-	}}
+	onload={() => mapRef.val?.setPixelRatio(4)}
 >
 	<MapEvents onclick={(e) => !readOnly && addMarker?.(e)} />
 	{#each markers as marker, i (marker.id)}
