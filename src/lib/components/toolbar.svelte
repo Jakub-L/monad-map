@@ -89,7 +89,7 @@
 
 		const link = document.createElement('a');
 		link.href = mapRefVal.getCanvas().toDataURL('image/png');
-		link.download = normalizeFilename(`${map.name}-map`, `${map.id}-map`);
+		link.download = normalizeFilename(map.name, `untitled map ${map.id}`);
 		link.click();
 
 		clearMarkers(mapRefVal);
