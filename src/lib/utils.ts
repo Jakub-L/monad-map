@@ -29,26 +29,6 @@ export const normalizeFilename = (name: string, fallback: string = ""): string =
 }
 
 /**
- * Fit the map to the bounds of the markers.
- *
- * @param {Map} map - The map to fit.
- * @param {PoI[]} markers - The markers on the map
- */
-export const fitMapToMarkers = (map: Map, markers: PoI[]) => {
-	const bounds: LngLatBoundsLike = markers.reduce(
-		(acc, { lngLat }) => [
-			Math.min(acc[0], lngLat.lng),
-			Math.min(acc[1], lngLat.lat),
-			Math.max(acc[2], lngLat.lng),
-			Math.max(acc[3], lngLat.lat)
-		],
-		[Infinity, Infinity, -Infinity, -Infinity]
-	);
-
-	map.fitBounds(bounds, { padding: FIT_BOUNDS_PADDING });
-};
-
-/**
  * Add a data source to the map for the markers.
  *
  * @param {Map} map - The map to add the source to.

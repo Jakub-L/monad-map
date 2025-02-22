@@ -80,7 +80,6 @@
 		const mapRefVal = mapRef.val;
 		if (!mapRefVal) return;
 
-		fitMapToMarkers(mapRefVal, map.markers);
 		addMarkerSource(mapRefVal, map.markers);
 		drawMarkers(mapRefVal);
 
