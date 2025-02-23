@@ -44,7 +44,10 @@
 	};
 
 	const toggleAll = () => {
-		textLayersState.value = textLayers.reduce((acc, layer) => ({ ...acc, [layer.id]: !allChecked }), {});
+		textLayersState.value = textLayers.reduce(
+			(acc, layer) => ({ ...acc, [layer.id]: !allChecked }),
+			{}
+		);
 	};
 
 	const saveMap = async () => {
@@ -84,7 +87,10 @@
 	containerClass: string = ''
 )}
 	<div class={['flex items-center gap-2', containerClass]}>
-		<button onclick={onchange} class="opacity-80">
+		<button
+			onclick={onchange}
+			class="flex h-10 w-10 items-center justify-center rounded-full opacity-80 hover:bg-red-700/30 focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-1 focus-visible:outline-red-400 active:scale-95 active:bg-red-700/60"
+		>
 			{#if indeterminate}
 				<IconIndeterminate class="h-5 w-5" />
 			{:else if checked}
@@ -102,7 +108,7 @@
 	<Dialog.Portal>
 		<Dialog.Overlay class="fixed inset-0 z-10 bg-slate-950/80" />
 		<Dialog.Content
-			class="truncated-rect-8 fixed left-[50%] top-[50%] z-10 flex w-full max-w-fit translate-x-[-50%] translate-y-[-50%] flex-col gap-4 border border-red-500 !bg-slate-950 px-4 py-2"
+			class="truncated-rect-8 w-96 max-w-full fixed left-[50%] top-[50%] z-10 flex translate-x-[-50%] translate-y-[-50%] flex-col gap-4 border border-red-500 !bg-slate-950 px-4 py-2"
 		>
 			<div class="flex items-center justify-between">
 				<Dialog.Title class="font-nova text-xl">Save map</Dialog.Title>
@@ -141,7 +147,7 @@
 								layer.name,
 								() => toggleCheckbox(layer.id),
 								false,
-								'ml-4'
+								'ml-8'
 							)}
 						{/each}
 					</div>
