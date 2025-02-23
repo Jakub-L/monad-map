@@ -20,7 +20,7 @@
 		showLayers
 	} from '$lib/utils';
 
-	import { mapRef, maps, selectedMapId } from '$lib/state.svelte';
+	import { mapRef, maps, selectedMapId, textLayers, textLayersState } from '$lib/state.svelte';
 
 	// Props
 	interface Props {
@@ -35,35 +35,16 @@
 	const mapRefVal: Map = $derived(mapRef.val)!;
 	let isSaving: boolean = $state(false);
 
-	const textLayers = [
-		{ id: 'water_name', name: 'Bodies of water' },
-		{ id: 'place_country_major', name: 'Major countries' },
-		{ id: 'place_country_minor', name: 'Minor countries' },
-		{ id: 'place_country_other', name: 'Other countries' },
-		{ id: 'place_state', name: 'States, territories and provinces' },
-		{ id: 'place_city_large', name: 'Major cities' },
-		{ id: 'place_city', name: 'Cities' },
-		{ id: 'place_town', name: 'Towns' },
-		{ id: 'place_village', name: 'Villages' },
-		{ id: 'place_suburb', name: 'Suburbs and subdivisions' },
-		{ id: 'highway_name_motorway', name: 'Highways and motorways' },
-		{ id: 'highway_name_other', name: 'Roads and streets' },
-		{ id: 'place_other', name: 'Other labels' }
-	];
-
-	let textLayersState: Record<string, boolean> = $state(
-		textLayers.reduce((acc, layer) => ({ ...acc, [layer.id]: true }), {})
-	);
-	let allChecked = $derived(Object.values(textLayersState).every((v) => v));
-	let someChecked = $derived(Object.values(textLayersState).some((v) => v));
+	let allChecked = $derived(Object.values(textLayersState.value).every((v) => v));
+	let someChecked = $derived(Object.values(textLayersState.value).some((v) => v));
 
 	// Handlers
 	const toggleCheckbox = (id: string) => {
-		textLayersState = { ...textLayersState, [id]: !textLayersState[id] };
+		textLayersState.value[id] = !textLayersState.value[id];
 	};
 
 	const toggleAll = () => {
-		textLayersState = textLayers.reduce((acc, layer) => ({ ...acc, [layer.id]: !allChecked }), {});
+		textLayersState.value = textLayers.reduce((acc, layer) => ({ ...acc, [layer.id]: !allChecked }), {});
 	};
 
 	const saveMap = async () => {
@@ -71,7 +52,7 @@
 		isSaving = true;
 
 		const hiddenLayers: string[] = textLayers.reduce((acc, { id }) => {
-			if (!textLayersState[id]) acc.push(id);
+			if (!textLayersState.value[id]) acc.push(id);
 			return acc;
 		}, [] as string[]);
 
@@ -156,7 +137,7 @@
 						{#each textLayers as layer}
 							{@render Checkbox(
 								layer.id,
-								textLayersState[layer.id],
+								textLayersState.value[layer.id],
 								layer.name,
 								() => toggleCheckbox(layer.id),
 								false,

@@ -38,7 +38,7 @@
 	let loadDialogOpen = $state(false);
 	let confirmClearDialogOpen = $state(false);
 	let confirmDeleteDialogOpen = $state(false);
-	let saveMapDialogOpen = $state(true);
+	let saveMapDialogOpen = $state(false);
 
 	// Handlers
 	const toggleLoadDialog = () => (loadDialogOpen = !loadDialogOpen);
@@ -75,8 +75,6 @@
 	const savePoIs = () => {
 		window.print();
 	};
-
-	
 </script>
 
 <!-- SNIPPETS -->

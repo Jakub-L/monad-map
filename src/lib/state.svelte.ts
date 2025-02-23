@@ -41,3 +41,24 @@ export const maps = localStore<Record<string, MonadMap>>('monad/maps', {
 	}
 });
 export const mapRef: { val: Map | undefined } = $state({ val: undefined });
+
+export const textLayers = [
+	{ id: 'water_name', name: 'Bodies of water' },
+	{ id: 'place_country_major', name: 'Major countries' },
+	{ id: 'place_country_minor', name: 'Minor countries' },
+	{ id: 'place_country_other', name: 'Other countries' },
+	{ id: 'place_state', name: 'States, territories and provinces' },
+	{ id: 'place_city_large', name: 'Major cities' },
+	{ id: 'place_city', name: 'Cities' },
+	{ id: 'place_town', name: 'Towns' },
+	{ id: 'place_village', name: 'Villages' },
+	{ id: 'place_suburb', name: 'Suburbs and subdivisions' },
+	{ id: 'highway_name_motorway', name: 'Highways and motorways' },
+	{ id: 'highway_name_other', name: 'Roads and streets' },
+	{ id: 'place_other', name: 'Other labels' }
+];
+
+export const textLayersState = localStore<Record<string, boolean>>(
+	'monad/textLayersState',
+	textLayers.reduce((acc, layer) => ({ ...acc, [layer.id]: true }), {})
+);
