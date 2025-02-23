@@ -10,7 +10,14 @@
 	import type { MonadMap } from '$lib/types';
 	import type { Map } from 'svelte-maplibre';
 
-	import { addMarkerSource, clearMarkers, drawMarkers, normalizeFilename } from '$lib/utils';
+	import {
+		addMarkerSource,
+		clearMarkers,
+		drawMarkers,
+		hideLayers,
+		normalizeFilename,
+		showLayers
+	} from '$lib/utils';
 
 	import { mapRef, maps, selectedMapId } from '$lib/state.svelte';
 
@@ -58,9 +65,14 @@
 	};
 
 	const saveMap = async () => {
-		console.log('click', mapRefVal);
 		if (!mapRefVal) return;
 
+		const hiddenLayers: string[] = textLayers.reduce((acc, { id }) => {
+			if (!textLayersState[id]) acc.push(id);
+			return acc;
+		}, [] as string[]);
+
+		hideLayers(mapRefVal, hiddenLayers);
 		addMarkerSource(mapRefVal, selectedMap.markers);
 		drawMarkers(mapRefVal);
 
@@ -73,6 +85,8 @@
 		link.click();
 
 		clearMarkers(mapRefVal);
+		showLayers(mapRefVal, hiddenLayers);
+		open = false;
 	};
 </script>
 

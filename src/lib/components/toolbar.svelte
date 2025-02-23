@@ -185,5 +185,5 @@
 		actionText="Delete"
 		onAction={() => onDeleteMap?.(map)}
 	/>
-	<SaveMap bind:open={saveMapDialogOpen} {map} />
+	<SaveMap bind:open={saveMapDialogOpen} />
 </div>
