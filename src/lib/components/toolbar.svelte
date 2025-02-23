@@ -7,6 +7,7 @@
 	import Input from '$lib/components/base/input.svelte';
 	import Button from '$lib/components/base/button.svelte';
 	import LoadMapDialog from '$lib/components/dialogs/load-map.svelte';
+	import SaveMap from '$lib/components/dialogs/save-map.svelte';
 	import ConfirmDialog from '$lib/components/dialogs/confirm.svelte';
 	import MapImporter from './map-importer.svelte';
 
@@ -34,15 +35,16 @@
 	const { map = $bindable(), readOnly, onAddMap, onDeleteMap }: Props = $props();
 
 	// State
-	import { mapRef } from '$lib/state.svelte';
 	let loadDialogOpen = $state(false);
 	let confirmClearDialogOpen = $state(false);
 	let confirmDeleteDialogOpen = $state(false);
+	let saveMapDialogOpen = $state(true);
 
 	// Handlers
 	const toggleLoadDialog = () => (loadDialogOpen = !loadDialogOpen);
 	const toggleConfirmClearDialog = () => (confirmClearDialogOpen = !confirmClearDialogOpen);
 	const toggleConfirmDeleteDialog = () => (confirmDeleteDialogOpen = !confirmDeleteDialogOpen);
+	const toggleSaveMapDialog = () => (saveMapDialogOpen = !saveMapDialogOpen);
 	const updateEditTime = () => (map.lastEdited = Date.now());
 
 	/** Creates a new blank map */
@@ -74,23 +76,7 @@
 		window.print();
 	};
 
-	const saveMap = async () => {
-		const mapRefVal = mapRef.val;
-		if (!mapRefVal) return;
-
-		addMarkerSource(mapRefVal, map.markers);
-		drawMarkers(mapRefVal);
-
-		// Ensure the map is fully rendered
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		const link = document.createElement('a');
-		link.href = mapRefVal.getCanvas().toDataURL('image/png');
-		link.download = normalizeFilename(map.name, `untitled map ${map.id}`);
-		link.click();
-
-		clearMarkers(mapRefVal);
-	};
+	
 </script>
 
 <!-- SNIPPETS -->
@@ -137,7 +123,7 @@
 		class={['hidden h-6 border-l border-red-500/50 xl:block print:hidden', readOnly && '!hidden']}
 	></div>
 	<div class={['hidden gap-2 xl:flex', readOnly && '!hidden']}>
-		<Button onClick={saveMap}>Save Map</Button>
+		<Button onClick={toggleSaveMapDialog}>Save Map</Button>
 		<Button onClick={savePoIs}>Save points of interest</Button>
 	</div>
 	<div
@@ -180,7 +166,7 @@
 			/>
 			<DropdownMenu.Separator class="border-t border-red-500/50 xl:hidden" />
 			{@render dropdownMenuItem('Save points of interest', savePoIs, 'xl:hidden')}
-			{@render dropdownMenuItem('Save Map', saveMap, 'xl:hidden')}
+			{@render dropdownMenuItem('Save Map', toggleSaveMapDialog, 'xl:hidden')}
 			<DropdownMenu.Separator class="border-t border-red-500/50 2xl:hidden" />
 			{@render dropdownMenuItem('Clear', toggleConfirmClearDialog)}
 			{@render dropdownMenuItem('Delete', toggleConfirmDeleteDialog)}
@@ -199,4 +185,5 @@
 		actionText="Delete"
 		onAction={() => onDeleteMap?.(map)}
 	/>
+	<SaveMap bind:open={saveMapDialogOpen} {map} />
 </div>
