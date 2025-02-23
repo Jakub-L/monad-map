@@ -20,7 +20,6 @@
 		blankMap,
 		clearMarkers,
 		drawMarkers,
-		fitMapToMarkers,
 		normalizeFilename
 	} from '$lib/utils';
 
@@ -36,7 +35,6 @@
 
 	// State
 	import { mapRef } from '$lib/state.svelte';
-	import type { LngLatBoundsLike } from 'svelte-maplibre';
 	let loadDialogOpen = $state(false);
 	let confirmClearDialogOpen = $state(false);
 	let confirmDeleteDialogOpen = $state(false);
