@@ -20,13 +20,35 @@ export const blankMap = (): MonadMap => {
  * @param {string} [fallback=""] - The fallback filename to use if the name is empty.
  * @returns {string} The normalized filename.
  */
-export const normalizeFilename = (name: string, fallback: string = ""): string => {
+export const normalizeFilename = (name: string, fallback: string = ''): string => {
 	return (name || fallback)
 		.toLowerCase()
 		.replace(/[^a-z0-9\s]/g, '')
 		.trim()
 		.replace(/\s+/g, '-');
-}
+};
+
+/**
+ * Hides selected layers on the map.
+ * @param {Map} map - The map to add the source to.
+ * @param {string[]} layers - The IDs of the layers to hide.
+ */
+export const hideLayers = (map: Map, layers: string[]) => {
+	for (const layer of layers) {
+		map.setLayoutProperty(layer, 'visibility', 'none');
+	}
+};
+
+/**
+ * Shows selected layers on the map.
+ * @param {Map} map - The map to add the source to.
+ * @param {string[]} layers - The IDs of the layers to show.
+ */
+export const showLayers = (map: Map, layers: string[]) => {
+	for (const layer of layers) {
+		map.setLayoutProperty(layer, 'visibility', 'visible');
+	}
+};
 
 /**
  * Add a data source to the map for the markers.
