@@ -6,6 +6,7 @@
 	import IconChecked from '~icons/ic/baseline-check-box';
 	import IconUnchecked from '~icons/ic/baseline-check-box-outline-blank';
 	import IconIndeterminate from '~icons/ic/baseline-indeterminate-check-box';
+	import IconSpinner from '~icons/ion/load-c';
 
 	import type { MonadMap } from '$lib/types';
 	import type { Map } from 'svelte-maplibre';
@@ -32,6 +33,7 @@
 	const selectedId: string = $derived(selectedMapId.value);
 	const selectedMap: MonadMap = $derived(maps.value[selectedId]);
 	const mapRefVal: Map = $derived(mapRef.val)!;
+	let isSaving: boolean = $state(false);
 
 	const textLayers = [
 		{ id: 'water_name', name: 'Bodies of water' },
@@ -66,6 +68,7 @@
 
 	const saveMap = async () => {
 		if (!mapRefVal) return;
+		isSaving = true;
 
 		const hiddenLayers: string[] = textLayers.reduce((acc, { id }) => {
 			if (!textLayersState[id]) acc.push(id);
@@ -86,6 +89,7 @@
 
 		clearMarkers(mapRefVal);
 		showLayers(mapRefVal, hiddenLayers);
+		isSaving = false;
 		open = false;
 	};
 </script>
@@ -127,23 +131,41 @@
 					<IconClose class="h-5 w-5" />
 				</Dialog.Close>
 			</div>
-			<Dialog.Description class="mb-6 flex flex-col gap-2">
-				<p>Choose which labels to include in the map:</p>
-				<div class="flex flex-col gap-1">
-					{@render Checkbox('all', allChecked, 'All labels', toggleAll, someChecked && !allChecked)}
-
-					{#each textLayers as layer}
-						{@render Checkbox(
-							layer.id,
-							textLayersState[layer.id],
-							layer.name,
-							() => toggleCheckbox(layer.id),
-							false,
-							'ml-4'
-						)}
-					{/each}
+			<Dialog.Description class="relative mb-6 flex flex-col gap-2">
+				<div
+					class={[
+						'absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] transform flex-col items-center justify-center gap-4',
+						!isSaving && 'invisible'
+					]}
+				>
+					<IconSpinner class="mb-4 size-10 animate-[spin_2s_linear_infinite] opacity-70" />
+					<span class="font-nova text-lg">Saving...</span>
+					<span class="text-sm">Please wait</span>
 				</div>
-				<Button onClick={saveMap} class="mt-2 grow">Save map</Button>
+				<div class={['flex flex-col', isSaving && 'invisible']}>
+					<p>Choose which labels to include in the map:</p>
+					<div class="flex flex-col gap-1">
+						{@render Checkbox(
+							'all',
+							allChecked,
+							'All labels',
+							toggleAll,
+							someChecked && !allChecked
+						)}
+
+						{#each textLayers as layer}
+							{@render Checkbox(
+								layer.id,
+								textLayersState[layer.id],
+								layer.name,
+								() => toggleCheckbox(layer.id),
+								false,
+								'ml-4'
+							)}
+						{/each}
+					</div>
+					<Button onClick={saveMap} class="mt-2 grow">Save map</Button>
+				</div>
 			</Dialog.Description>
 		</Dialog.Content>
 	</Dialog.Portal>
